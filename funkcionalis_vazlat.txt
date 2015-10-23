@@ -1,0 +1,36 @@
+Funkciók
+
+	1. Regisztráció
+		- Személy adatainak kitöltése formon
+		- Adatok rögzítése az adatbázisban
+		??? reg. törlése / módosítása
+	
+	2. Betegfelvétel 
+		- (létezõ beteg esetén) Beteg kiválasztása / (új beteg esetén) Beteg regisztrálása
+		- Felvétel idõpontjának rögzítése
+	
+	3. Betegelbocsájtás
+		- Beteg kiválasztása
+		- Elbocsátás idõpontjának rögzítése
+	
+	4. Gyógyszerek kiírása
+		??? gyógyszerkiírások tárolása
+		??? gyógyszerkiosztás == kiírás + raktári mennyiség kezelése?
+		
+	5. Mûtétek elõjegyzése
+		- beteg kiválasztása
+		- mûtéti idõont kiválasztása
+		??? egyéb adatok? mûtõszoba, személyzet, stb...
+		??? ellenõrzések
+		- Mûtéti adatok mentése
+		
+	6. Raktárkészlet karbantartása
+		- raktári egyedtípusok listázása / hozzáadása
+		- egyedek selejtezési / kiosztási lehetõsége
+		
+	7. Kimutatások
+		- Orvosok munkája ??? mit jelent
+		- Gyakori betegségek ??? mikor és ki tárolja a betegséget, milyen adatokat tartalmazzon a kimutatás?
+		- Rektárkészlet változásai
+		
+		
