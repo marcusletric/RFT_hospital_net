@@ -4,6 +4,8 @@
 		- id :(egyedi azonosító) 1,2,3,4....
 		- jogkör : Orvos / Raktárfelügyelő / Vezető / Beteg / Nővér / recepciós   O / R / V / B / N / REC
 		- név :
+		- usernév
+		- password
 		??????
 		
 2. Kórház teljes raktárkészlete
