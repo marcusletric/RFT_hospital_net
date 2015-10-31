@@ -6,7 +6,8 @@
 		- név :
 		- usernév
 		- password
-		??????
+		- tajszám
+		- szül. dátum
 		
 2. Kórház teljes raktárkészlete
 
@@ -14,41 +15,40 @@
 		- id (egyedi azonosító) 1,2,3,4...
 		- típus: gyógyszer / kötszer / egyéb  GY / K / E
 		- megnevezés: szöveg
-		????
 		
 	Raktáron lévő tárgyak
 		- tárgy_id (raktári tárgy id)
 		- lejárati idő (dátum)
-		?????
-		
 		
 3. Betegfelvétel / elbocsájtás
-	
 	- beteg_id (személy id)
+	- orvos_id (személy id)
 	- felvétel ideje (dátum)
 	- elbocsájtás ideje (dátum)
 	
-4. Gyógyszerek kiosztása
-	
+4. Gyógyszerek kiirasa
 	- beteg_id (személy id)
 	- kiosztás ideje (dátum)
-	- kiosztott gyógyszerek (raktári tárgy id [tömb])
-	?????
+	- kiosztando gyógyszerek (raktári tárgy id [tömb])
 	
 5. Orvosok / Nővérek beosztása
-
 	- beosztott_id (személy id)
 	- beosztás [ [hh:mm,hh:mm], [hh:mm,hh:mm], [hh:mm,hh:mm], [hh:mm,hh:mm], [hh:mm,hh:mm], [hh:mm,hh:mm], [hh:mm,hh:mm] ] (hétfői [kezdés, végzés], keddi ........)
 	
-6. Műtétek
+6. Betegségek
+	- beteg_id (egyedi azon)
+	- betegseg_neve
+	- betegseg_kezdete (dátum)
+	- betegseg_vege (dátum)
 
+7. Műtétek
 	- id (egyedi azon)
 	- időpont (dátum)
+	- orvos_id
+	- muto_szoba
 	- beteg_id
-	- muteti_szemelyzet (személy id [tömb])
-	?????
 	
-7. Jogok 
+8. Jogok 
 	- jogkör (személy jogkör azonosító)
 	- elérhető funkciók [funkciók tömb]
 	
