@@ -1,0 +1,59 @@
+3. Architektúrális kialakítása
+
+3.1. Webes felület
+	Név: Webes felület
+	Típus: Modul
+	Végpont: Web szerver
+	Leírás: A rendszert használó személyek fő interfésze.
+	Tulajdonságok: Adatbázis (lásd: 4.1 szekció)
+	Erőforrások: Kliens számítógépe,
+	Funkcionalitás:
+	
+	szemelyekListazas()
+	szemelyRegisztral()
+	szemelyTorol()
+	betegfelvetel()
+	betegelbocsatas()
+	gyogyszerekListazasa()
+	gyogyszerKiiras()
+	mutetElojegyzes()
+	raktarEgyedtipusokListazasa()
+	raktarEgyedtipusFelvetele()
+	raktarEgyedFelvetele()
+	raktarEgyedEltavolitas()
+	orvosMunkaKimutar()
+	betegsegKimutat()
+	raktarKimutat()
+		
+
+3.2. Kiszolgálóegység
+
+	szerverInditas()
+		- HTTP szolgáltatás indítása a konfiguráció alapján
+		
+		folyamat:
+		1. HTTP library indítása.
+		
+	keresFeldolgozas()
+		- beérkező HTTP kérés alapján a hívandó adatbázisfunkció meghatározása
+		- adatbázismodul funkció meghívása az adatokkal paraméterezve
+		
+		folyamat:
+		1. HTTP kérés érkezett
+		2. a kérés adatai alapján eldöntjük a hívandó adatbázisfunkciót
+		3. adatbázisfunkció meghívása az adatokkal
+
+3.3. Adatbázismodul
+	
+	listazas()
+		- bejövő paraméteren meghatározott tábla adatainak kiolvasása, visszaadása
+	hozzaadas()
+		- bejövő paraméterek: táblanév, {mezonev1: adat1, mezonev2: adat2} alapján megadott táblába a megadott adatok beírása
+	modositas()
+		- bejövő paraméterek: táblanév, {mezonev1: adat1, mezonev2: adat2}, {mezonevA: adatA, mezonevB: adatB} alapján megadott táblában a {mezonev1: adat1, mezonev2: adat2} által azonosított rekord  {mezonevA: adatA, mezonevB: adatB} adat módosítása
+	torles()
+		- bejövő paraméterek: táblanév, {mezonev1: adat1, mezonev2: adat2} alapján megadott táblában a {mezonev1: adat1, mezonev2: adat2} által azonosított rekord törlése
+		
+4. Adatstruktúra kialakítása
+
+	SRS 3.4-es pontja a minta SDD-nek megfelelően leírva
