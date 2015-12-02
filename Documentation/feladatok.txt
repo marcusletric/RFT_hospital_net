@@ -1,0 +1,183 @@
+2.3
+A termék használatához nem szükséges magas oktatási szint illetve nagy szakértelem, mindössze annyi kell, hogy a használója tudjon kezelni gombokat, szöveg mezõket és hasonló eszközöket. 
+
+3.4
+Recepciós
+     -id (típus: text)(leírás: a recepciós egyedi azonosítója)
+     -név(típus: text)(leírás: a recepciós neve)
+     -kor(típus: integer)(leírás: a recepciós kora)
+     -cím(típus: text)(leírás: a recepciós címe)
+
+Orvos
+     -id (típus: text)(leírás: az orvos egyedi azonosítója)
+     -név(típus: text)(leírás: az orvos neve)
+     -kor(típus: integer)(leírás: az orvos kora)
+     -cím(típus: text)(leírás: az orvos címe)
+
+Vezetõ
+     -id (típus: text)(leírás: a vezetõ egyedi azonosítója)
+     -név(típus: text)(leírás: a vezetõ neve)
+     -kor(típus: integer)(leírás: a vezetõ kora)
+     -cím(típus: text)(leírás: a vezetõ címe)
+
+Nõvér
+     -id (típus: text)(leírás: a nõvér egyedi azonosítója)
+     -név(típus: text)(leírás: a nõvér neve)
+     -kor(típus: integer)(leírás: a nõvér kora)
+     -cím(típus: text)(leírás: a nõvér címe)
+
+Raktár felügyelõ
+     -id (típus: text)(leírás: a raktár felügyelõ egyedi azonosítója)
+     -név(típus: text)(leírás: a raktáros neve)
+     -kor(típus: integer)(leírás: a raktáros kora)
+     -cím(típus: text)(leírás: a raktáros címe)
+
+Beteg
+     -id (típus: text)(leírás: a beteg egyedi azonosítója)
+     -név(típus: text)(leírás: a beteg neve)
+     -kor(típus: integer)(leírás: a beteg kora)
+     -cím(típus: text)(leírás: a beteg címe)
+     -nem(típis: text)(leírás: a beteg neme)
+
+Betegfelvétel
+     -id (típus: text)(leírás: a felvétel egyedi azonosítója)
+     -beteg_id(típus: pointer)(leírás: a beteg azonosítója)
+     -orvos_id(típus: ponter)(leírás: az orvos azonosítója)
+     -szoba_id(típus: pointer)(leírás: a szoba azonosítója)
+     -dátum(típus: dátum)(leírás:a felvétel dátuma)
+     -tünetek(típus: text)(leírás: a tünetek leírása)
+     -betegsége(típus: text)(leírás: a beteség megnevezése)
+
+Betegelbocsájtás
+     -felv_beteg_id(típus: pointer)(leírás: a felvétel azonosítója)
+     -orvos_id(típus: pointer)(leírás: az elbocsájtást végzõ orvos azonosítója)
+     -oka(típus: text)(leírás: az elbocsájtás oka)
+     -dátum(típus: dátum)(leírás: az elbocsájtás dátuma)
+		
+Gyógyszer kiírása
+     -id (típus: text)(leírás: a kiírás egyedi azonosítója)
+     -beteg_id(típus: pointer)(leírás: a beteg azonosítója)
+     -orvos_id(típus: pointer)(leírás: az orvos azonosítója)
+     -gyógyszer_id(típus: pointer)(leírás: a gyógyszer azonosítója)
+     -mennyiség(típus: integer)(leírás: a gyógyszer mennyisége)
+     -adagolás(típus: text)(leírás: a gyógyszer adagolása)
+     -dátum(típus: dátum)(leírás: a kiírás dátuma)
+
+Szobák
+     -id (típus: text)(leírás: a szoba egyedi azonosítója)
+     -szoba_szám(típus: integer)(leírás: a szoba száma)
+     -férõhely(típus: integer)(leírás: a szoba férõhelye)
+
+Mûtõk
+     -id (típus: text)(leírás: a mûtõ egyedi azonosítója)
+     -mûtõ_szám (típus: integer)(leírás: a mûtõ száma)
+
+Mûtétek
+     -id (típus: text)(leírás: a mûtét egyedi azonosítója)
+     -beteg_id(típus: pointer)(leírás: a beteg azonosítója)
+     -mûtõ_id(típus: pointer)(leírás: a mûtõ azonosítója)
+     -orvos_id(típus: pointer)(leírás: az orvos azonosítója)
+     -dátum(típus: dátum)(leírás: a mûtét dátuma)
+     -mûtõcsapat(típus: text)(leírás: a mûtétet végzõ csapat)
+
+Raktár
+     -id (típus: text)(leírás: a raktár egyedi azonosítója)
+     -raktár_szám(típus: integer)(leírás: a raktár száma)
+
+Raktári tárgy
+     -id (típus: text) (leírás: a raktári tárgy egyedi azonosítója)
+     -tárgy_típus(típus: text)(leírás: a raktári tárgy típusa) gyógyszer/kötszer/egyéb
+     -név(típus: text)(leírás: a raktári tárgy neve)
+     -szavatosság(típus: dátum)(leírás: a raktári tárgy szavatossága)
+
+Raktáron lévõ tárgyak
+     -raktár_jegy(típus: text)(leírás: a raktárban lévõ tárgy azonosítója)
+     -tárgy_id(típus: pointer)(leírás: a raktári tárgy azonasítója)
+     -mennyiség(típus: integer)(leírás: a raktári tárgy mennyisége)
+     -raktár_id(típus: pointer)(leírás: a raktár azonosítója)
+
+Raktár változása
+     -tárgy_id(a kivett raktári tárgy azonasítója)
+     -eredeti_mennyiség(típus: integer)(leírás: a raktári tárgy eredeti mennyisége)
+     -kivett_mennyiség(típus: integer)(leírás: a kivett raktári tárgy mennyisége)
+     -raktár_id(típus: pointer)(leírás: a raktár azonosítója)
+     -oka(típus: text)(leírás: a tárgy kivételének oka)
+     -dátum(típus: dátum)(leírás: a kivétel dátuma)
+
+Regisztráció
+     -id(típus: text)(leírás: orvos, recepciós, vezetõ, nõvér egyedi azonosítója)
+     -fehasználónév(típus: text)(leírás: orvos, recepciós, vezetõ, nõvér felhasználóneve)
+     -jelszó(típus: text)(leírás: orvos, recepciós, vezetõ, nõvér jelszava)
+
+Beosztás orvosok
+     -id(típus: pointer)(leírás: az orvos azonosítója)
+     -dátum(típus: dátum)(leírás: a beosztás dátuma)
+     -mettõl(típus: idõ)(leírás: a munka kezdés ideje)
+     -meddig(típus: idõ)(leírás: a munkaidõ végégnek ideje)
+     -szobák(típus: text)(leírás: a felügyelendõ szobák számai)
+
+Beosztás recepciósok
+     -id(típus: pointer)(leírás: a recepciós azonosítója)
+     -dátum(típus: dátum)(leírás: a beosztás dátuma)
+     -mettõl(típus: idõ)(leírás: a munka kezdés ideje)
+     -meddig(típus: idõ)(leírás: a munkaidõ végégnek ideje)
+
+Beosztás nõvérek
+     -id(típus: pointer)(leírás: a nõvér azonosítója)
+     -dátum(típus: dátum)(leírás: a beosztás dátuma)
+     -mettõl(típus: idõ)(leírás: a munka kezdés ideje)
+     -meddig(típus: idõ)(leírás: a munkaidõ végégnek ideje)
+     -szobák(típus: text)(leírás: a felügyelendõ szobák számai)
+
+Beosztás raktár felügyelõk
+     -id(típus: pointer)(leírás: a raktár felügyelõ azonosítója)
+     -dátum(típus: dátum)(leírás: a beosztás dátuma)
+     -mettõl(típus: idõ)(leírás: a munka kezdés ideje)
+     -meddig(típus: idõ)(leírás: a munkaidõ végégnek ideje)
+     -raktár(típus: integer)(leírás: a raktár száma)
+
+Beosztás vezetõ
+     -id(típus: pointer)(leírás: a vezetõ azonosítója)
+     -dátum(típus: dátum)(leírás: a beosztás dátuma)
+     -mettõl(típus: idõ)(leírás: a munka kezdés ideje)
+     -meddig(típus: idõ)(leírás: a munkaidõ végégnek ideje)
+
+
+3.6.2
+
+A rendszer elérhetõ lesz a nap 24 órájában.
+Összeomlás esetén minden adat az utolsó mentési pont után került be el fog veszni.
+(recoveryhez és restrathoz nem tudom mit kellene írnunk)
+3.6.5
+
+A termék képes lesz futni Windows, Mac OS X és Linux rendszeren is futni.
+A szoftvert platformfüggetlen programozási nyelven fog elkészülni a hordozhatóság érdekében.
+A rendszer használatához szükséges a Java Runtime Environment (JRE) és valamilyen böngészõ rendszer.
+
+3.7.1
+3.7.1.1	Orvos
+3.7.1.1.1 Betegfelvétel
+3.7.1.1.2 Betegelbocsájtás
+3.7.1.1.3 Gyógyszerek kiírása
+3.7.1.1.4 Mûtétek elõjegyzése
+3.7.1.2	Vezetõ
+3.7.1.2.1 Orvosok munkájának kimutatása
+3.7.1.2.2 Gyakori betegségek kimutatása
+3.7.1.2.3 Raktárkészlet változásainak kimutatása
+3.7.1.3	Raktár felügyelõ
+3.7.1.3.1 Rendelés
+3.7.1.3.2 Selejtezés
+3.7.1.3.3 Készlet listázása
+3.7.1.3.4 Gyógyszer kiosztása
+3.7.1.4	Recepciós
+3.7.1.4.1 Beteg regisztrálása
+3.7.1.4.2 Beteg adatainak módosítása
+3.7.1.4.3 Beteg törlése
+
+
+
+
+     
+
+
+
