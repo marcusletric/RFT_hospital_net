@@ -1,0 +1,25 @@
+{
+  "name": "HospitalNet",
+  "private": true,
+  "version": "0.0.0",
+  "description": "HospitalNet Client app",
+  "repository": "https://github.com/marcusletric/RFT_hospital_net",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp" : "*",
+    "gulp-sass" : "*",
+    "gulp-concat" : "*",
+    "gulp-uglify" : "*",
+    "gulp-rename" : "*",
+    "gulp-file-include" : "*",
+    "run-sequence" : "*",
+    "bower": "^1.3.1"
+  },
+  "dependencies":{
+    "http-server": "^0.6.1"
+  },
+  "scripts": {
+    "install": "bower install",
+    "start": "http-server -a localhost -p 8000 -c-1"
+  }
+}
