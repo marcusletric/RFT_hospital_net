@@ -1,0 +1,28 @@
+@import "common";
+
+* {
+  font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;
+}
+
+.app_canvas {
+  display: block;
+  @include stretch(0, 0, 0, 0);
+  margin: 15px;
+  .main_screen {
+    display: block;
+    @include stretch(0, 150px, 0, 0);
+  }
+  .menu {
+    list-style: none;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100px;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto;
+    @import "features/menu/menuItem";
+  }
+}

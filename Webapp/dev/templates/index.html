@@ -12,15 +12,17 @@
   <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
-  <ul class="menu">
-    <li ng-repeat="route in routes"><a >{{route.name}}</a></li>
-  </ul>
-
   <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
 
-  <div class="container" ng-view></div>
+  <div class="app_canvas">
+    <ul class="menu">
+      <li ng-repeat="route in routes"><a >{{route.name}}</a></li>
+    </ul>
+
+    <div class="main_screen" ui-view></div>
+  </div>
 
   <!-- Library source includes -->
 @@include('./_lib.html')

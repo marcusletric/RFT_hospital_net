@@ -1,0 +1,9 @@
+<li ng-repeat="route in ::routes">
+    <a ui-sref="{{::route.href}}">
+        <div class="icon">
+            <img src="assets/icons/{{::route.icon}}"/>
+            <div class="overlay"></div>
+        </div>
+        <span>{{::route.name}}</span>
+    </a>
+</li>

@@ -10,7 +10,8 @@ var runSequence = require('run-sequence');
 var devutils = require('./dev/devutils.js');
 
 gulp.task('sass', function () {
-    gulp.src('app/**/*.scss')
+    gulp.src('app/src/*.scss')
+        .pipe(concat('app.css'))
         .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest('app/css'));
 });
@@ -37,5 +38,11 @@ gulp.task('includeSrc', function(){
 gulp.task('devscripts', function(cb) {
     runSequence('includeLib',
                 'includeSrc',
+                cb);
+});
+
+gulp.task('devcompile', function(cb) {
+    runSequence('sass',
+                'devscripts',
                 cb);
 });
