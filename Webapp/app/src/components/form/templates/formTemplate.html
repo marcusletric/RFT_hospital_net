@@ -1,0 +1,14 @@
+<div class="form-container">
+    <div class="container-fluid">
+        <div class="col-xs-5">
+            <form-input ng-repeat="(key, value) in leftInputs" form-field="{{key}}"></form-input>
+        </div>
+        <div class="col-xs-5">
+            <form-input ng-repeat="(key, value) in rightInputs" form-field="{{key}}"></form-input>
+        </div>
+    </div>
+    <div class="form-footer">
+        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> Mentés</button>
+        <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Elvetés</button>
+    </div>
+</div>

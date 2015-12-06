@@ -9,25 +9,32 @@
   <title>HospitalNet Client</title>
   <meta name="description" content="Client application for HospitalNet system">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="css/app.css">
 </head>
 <body>
+<!-- Library source includes -->
+@@include('./_lib.html')
+<!-- Dev source includes -->
+@@include('./_includes.html')
+
+
   <!--[if lt IE 7]>
   <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
-
   <div class="app_canvas">
+    <div class="header">
+      <a>
+        <img class="logo" src="assets/images/logo.png"/>
+      </a>
+      <div class="login_ctrls"></div>
+    </div>
     <ul class="menu">
       <li ng-repeat="route in routes"><a >{{route.name}}</a></li>
     </ul>
 
     <div class="main_screen" ui-view></div>
   </div>
-
-  <!-- Library source includes -->
-@@include('./_lib.html')
-  <!-- Dev source includes -->
-@@include('./_includes.html')
 
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>

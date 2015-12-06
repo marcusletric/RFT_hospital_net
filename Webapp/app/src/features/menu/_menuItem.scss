@@ -8,6 +8,7 @@ li {
     color: #363636;
     .icon {
       transition: all 0.3s;
+      background-color: transparent;
       border: 1px solid #888888;
       display: inline-block;
       height: 50px;
@@ -31,7 +32,7 @@ li {
       .icon {
         @include buttonOverlay;
         box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
-        background-color: #C5F7BE;
+        background-color: #ffd409;
       }
       span {
         text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
