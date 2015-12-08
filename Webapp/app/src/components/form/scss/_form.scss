@@ -1,5 +1,7 @@
 .form-container {
+  margin-top: 20px;
   margin-bottom: 42px;
+  @import "formInput";
 }
 .form-footer {
   position: absolute;

@@ -3,6 +3,10 @@
  */
 hospitalNet.constant('routes', [
         {
+            name: 'Kezdőképernyő',
+            href: 'home'
+        },
+        {
             name: 'Regisztráció',
             href: 'regisztracio',
             icon: 'registration.svg'
@@ -10,7 +14,7 @@ hospitalNet.constant('routes', [
         {
             name: 'Betegfelvétel',
             href: 'betegfelvetel',
-            icon: 'patient_reg.svg'
+            icon: 'illness.svg'
         },
         {
             name: 'Gyógyszer kiírása',

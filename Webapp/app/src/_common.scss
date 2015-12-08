@@ -17,3 +17,27 @@
     background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.12) 51%, rgba(0, 0, 0, 0.04));
   }
 }
+
+.container {
+  padding: 0;
+}
+
+@media (min-width: 768px){
+  .container {
+    width: 570px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    width: 800px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    width: 1000px;
+  }
+}
+
+
