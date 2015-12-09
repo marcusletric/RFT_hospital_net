@@ -1,4 +1,4 @@
-<div class="form-container">
+<form name="thisForm" class="form-container">
     <div class="container">
         <div class="col-md-6">
             <form-input ng-repeat="(key, value) in leftInputs" form-field="{{key}}"></form-input>
@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="form-footer">
-        <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-ok"></span> Mentés</button>
+        <button type="button" ng-disabled="thisForm.$error.required" class="btn btn-primary" ng-click="saveData()"><span class="glyphicon glyphicon-ok"></span> Mentés</button>
         <a ui-sref="home" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Elvetés</a>
     </div>
-</div>
+</form>

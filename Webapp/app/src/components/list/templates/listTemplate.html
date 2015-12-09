@@ -1,0 +1,13 @@
+<div class="list-container">
+    <div class="list-container">
+        <div class="list-item" ng-repeat="item in list">
+            <div class="item-desc">
+                <div class="desc-field" ng-repeat="field in item">{{field}}</div>
+            </div>
+            <div class="item-controls">
+                <div class="item-control" ng-repeat="control in controls"></div>
+            </div>
+        </div>
+    </div>
+    <div class="form-footer"></div>
+</div>

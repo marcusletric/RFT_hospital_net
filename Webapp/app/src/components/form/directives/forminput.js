@@ -19,7 +19,7 @@ hospitalNet.directive('formInput', function($compile,$http){
                     fieldDef.disabled ? inputField.attr('disabled', 'disabled') : '';
                     fieldDef.reqired ? inputField.attr('ng-required', true) : '';
                     elem.append(newElem);
-                    $compile(elem.contents())(scope);
+                    $compile(elem.contents())(scope.$parent);
                 }
             );
         }
