@@ -27,6 +27,11 @@ hospitalNet.constant('routes', [
             icon: 'surgery.svg'
         },
         {
+            name: 'Beosztás',
+            href: 'beosztas',
+            icon: 'workreport.svg'
+        },
+        {
             name: 'Raktár',
             href: 'raktar',
             icon: 'warehouse.png'
@@ -48,3 +53,9 @@ hospitalNet.config(function($stateProvider, routes) {
         });
     }
 );
+
+hospitalNet.run(function($state){
+   if(!$state.current.name || $state.current.name == ''){
+        $state.go('home');
+   }
+});

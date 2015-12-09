@@ -4,14 +4,18 @@
 hospitalNet.service('dataService',function($http, $q, backendConfig){
     var backendUrl = 'http://' + backendConfig.address;
 
+    var reqCnf = function(url,data,mock){
+        return {
+            method: mock ? 'GET' : 'POST',
+            url: mock ? url + '/app/mock/' + data.table + '.json': url,
+            data: $.param(data),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }
+    };
+
     this.getData = function(table,filterCondition){
         var deferred = $q.defer();
-        $http({
-            method: 'POST',
-            url: backendUrl,
-            data: $.param({'table' : table, 'filter':filterCondition}),
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).then(function(res){
+        $http(reqCnf(backendUrl,{'table' : table, 'filter':filterCondition},true)).then(function(res){
             deferred.resolve(res.data);
         },function(err){
             deferred.reject(err);
@@ -23,12 +27,7 @@ hospitalNet.service('dataService',function($http, $q, backendConfig){
     this.setData = function(table,dataSet){
         var deferred = $q.defer();
         dataSet['table']=table;
-        $http({
-            method: 'POST',
-            url: backendUrl,
-            data: $.param(dataSet),
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).then(function(res){
+        $http(reqCnf(backendUrl,dataSet,true)).then(function(res){
             deferred.resolve(res.data);
         },function(err){
             deferred.reject(err);

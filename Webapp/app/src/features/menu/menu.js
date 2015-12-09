@@ -6,7 +6,9 @@ hospitalNet.directive('menu', function(routes){
         restrict: 'C',
         templateUrl: 'src/features/menu/menuItem.html',
         link: function(scope){
-            scope.routes = routes;
+            scope.routes = routes.filter(function(item){
+                return item.icon && item.icon.length;
+            });
         }
     }
 });
