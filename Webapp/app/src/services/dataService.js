@@ -6,6 +6,8 @@ hospitalNet.run(function($rootScope){
 });
 
 hospitalNet.service('dataService',function($http, $q, backendConfig, $rootScope){
+    var self = this;
+
     var backendUrl = 'http://' + backendConfig.address;
 
     var reqCnf = function(url,data,mock){
@@ -17,16 +19,30 @@ hospitalNet.service('dataService',function($http, $q, backendConfig, $rootScope)
         }
     };
 
+    this.pendingRequests = 0;
+    this.err = 0;
+
+    this.setLoadingState = function(pendingReqDelta){
+        this.pendingRequests += pendingReqDelta;
+        $rootScope.loading = this.pendingRequests > 0;
+        if(!$rootScope.loading){
+            if(this.err > 0){
+                $.notify("Hiba történt a kiszolgáló elérése során", "error");
+            }
+            this.err = 0;
+        }
+    };
+
     this.getData = function(table,filterCondition){
         var deferred = $q.defer();
-        $rootScope.loading = true;
-        $http(reqCnf(backendUrl,{'table' : table, 'filter':filterCondition})).then(function(res){
+        self.setLoadingState(1);
+        $http(reqCnf(backendUrl,{'table' : table, 'filter':filterCondition},true)).then(function(res){
             deferred.resolve(res.data);
-            $rootScope.loading = false;
+            self.setLoadingState(-1);
         },function(err){
-            $.notify("Hiba történt a kiszolgáló elérése során", "error");
             deferred.reject(err);
-            $rootScope.loading = false;
+            self.err++;
+            self.setLoadingState(-1);
         });
 
         return deferred.promise;
@@ -35,14 +51,14 @@ hospitalNet.service('dataService',function($http, $q, backendConfig, $rootScope)
     this.setData = function(table,dataSet){
         var deferred = $q.defer();
         dataSet['table']=table;
-        $rootScope.loading = true;
+        self.setLoadingState(1);
         $http(reqCnf(backendUrl,dataSet)).then(function(res){
             deferred.resolve(res.data);
-            $rootScope.loading = false;
+            self.setLoadingState(-1);
         },function(err){
-            $.notify("Hiba történt a kiszolgáló elérése során", "error");
             deferred.reject(err);
-            $rootScope.loading = false;
+            self.err++;
+            self.setLoadingState(-1);
         });
 
         return deferred.promise;

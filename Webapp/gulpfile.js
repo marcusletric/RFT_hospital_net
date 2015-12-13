@@ -10,7 +10,7 @@ var runSequence = require('run-sequence');
 var devutils = require('./dev/devutils.js');
 
 gulp.task('sass', function () {
-    gulp.src('app/src/*.scss')
+    gulp.src('app/src/!(_)*.scss')
         .pipe(concat('app.css'))
         .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest('app/css'));

@@ -1,4 +1,54 @@
+.list-header{
+  margin-top: 7px;
+  input {
+    width: 300px;
+    display: inline-block;
+  }
+}
 .list-container {
-  margin-top: 20px;
-  margin-bottom: 42px;
+  padding-right: 20px;
+  @include stretch(95px, 20px, 52px, 0);
+  overflow-y: auto;
+  .list-item {
+    display: table;
+    width: 100%;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    border: 1px solid #aaaaaa;
+    padding: 0 5px;
+    &:hover {
+      border: 1px solid #444444;
+      box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+    }
+    div {
+      line-height: 32px;
+      display: inline-block;
+    }
+  }
+  .item-controls {
+    display: inline-block;
+    float: right;
+    line-height: 32px;
+    .item-control {
+      display: inline-block;
+      position: relative;
+      float: left;
+      width: 28px;
+      height: 28px;
+      border: 1px solid #aaaaaa;
+      border-radius: 2px;
+      margin: 2px;
+      cursor: pointer;
+      div {
+        @include stretch(0,0,0,0);
+        text-align: center;
+        line-height: 28px;
+      }
+      &:hover {
+        background-color: #ffd409;
+        border: 1px solid #444444;
+        @include buttonOverlay();
+      }
+    }
+  }
 }

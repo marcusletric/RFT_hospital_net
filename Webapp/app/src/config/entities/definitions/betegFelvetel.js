@@ -14,11 +14,13 @@ hospitalNet.config(function(entityDefinitions){
             OrvosID: {
                 desc: 'Orvos',
                 type: 'select',
+                options: {dynamicData: {table:'szemely',filter:{'tipus':'orvos'}}},
                 reqired: true
             },
             szobaID: {
                 desc: 'Szoba',
                 type: 'select',
+                options: {dynamicData: {table:'helyseg'}},
                 reqired: true
             },
             felvetel: {

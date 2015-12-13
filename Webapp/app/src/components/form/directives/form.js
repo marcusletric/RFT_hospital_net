@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2015.12.06..
  */
-hospitalNet.directive('form', function(dataService){
+hospitalNet.directive('form', function($stateParams,$rootScope,$window,dataService){
     return {
         restrict: 'C',
         templateUrl: 'src/components/form/templates/formTemplate.html',
@@ -18,6 +18,10 @@ hospitalNet.directive('form', function(dataService){
                 formField.reqired ? scope.leftInputs[fieldName] = formField : scope.rightInputs[fieldName] = formField;
             }
 
+            scope.back = function(){
+                $window.history.back();
+            };
+
             scope.saveData = function(){
                 var dataset = {};
                 for (field in scope.objectDef.dataFields){
@@ -28,6 +32,26 @@ hospitalNet.directive('form', function(dataService){
                 },function(){
                     $.notify("Hiba történt az adatok mentése során.", "error");
                 });
+            };
+
+            function loadData(){
+                dataService.getData(scope.objectDef.table,$stateParams).then(function(data){
+                    for(field in data){
+                        scope[field] = data;
+                    }
+                });
+            }
+
+            var hasValidStateParam = false;
+            for(key in $stateParams){
+                if($stateParams[key]){
+                    hasValidStateParam = true;
+                    break;
+                }
+            }
+
+            if(hasValidStateParam){
+                loadData();
             }
         }
     }

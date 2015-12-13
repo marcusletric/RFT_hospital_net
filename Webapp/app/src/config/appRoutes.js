@@ -37,18 +37,30 @@ hospitalNet.constant('routes', [
             icon: 'warehouse.png'
         },
         {
+            name: 'Raktári egyed',
+            href: 'raktari_egyed?egyed_id',
+            params: {
+                'egyed_id': null
+            }
+        },
+        {
             name: 'Kimutatások',
             href: 'kimutat',
             icon: 'chart.svg'
+        },
+        {
+            name: 'Kimutatás render',
+            href: 'kimutatas_render'
         }
     ]
 );
 
 hospitalNet.config(function($stateProvider, routes) {
         routes.forEach(function (route) {
-            $stateProvider.state(route.href, {
+            var stateName = route.href.split('?')[0]
+            $stateProvider.state(stateName, {
                 url: "/" + route.href,
-                templateUrl: 'src/features/' + route.href + '/' + route.href + '.html'
+                templateUrl: 'src/features/' + stateName + '/' + stateName + '.html'
             });
         });
     }

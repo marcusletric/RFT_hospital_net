@@ -3,35 +3,56 @@
  */
 hospitalNet.directive('list', function(dataService){
     return {
-        restrict: 'C',
+        restrict: 'E',
         templateUrl: 'src/components/list/templates/listTemplate.html',
         replace: true,
-        scope: {
-            condition : '=',
-            fieldList : '&'
-        },
         link: function(scope,element,attrs){
-            scope.loading = true;
+            var condition = scope.$eval(attrs.condition);
+            var table = attrs.table;
+            var fields = scope.$eval(attrs.fields);
+            var listData;
 
-            dataService.getData(attrs.table,scope.condition).then(function(response){
+            scope.controls = scope.$eval(attrs.controls);
+
+            dataService.getData(table,condition).then(function(response){
                 processDatas(response);
-                scope.loading = false;
             });
 
             function processDatas(data){
-                var dataArray = [];
                 var i = 0;
                 for(index in data){
-                    dataArray[i]={};
+                    var descFields={};
                     for(key in data[index]){
-                        if(scope.fieldList().indexOf(key) > -1){
-                            dataArray[i][key] = data[index][key];
+                        if(fields.indexOf(key) > -1){
+                            descFields[key] = data[index][key];
                         }
                     }
+                    data[i].descFields = descFields;
                     i++;
                 }
-                scope.list = dataArray;
+                listData = data;
+                scope.list = data;
             }
+
+            scope.getControlTemplate = function(control){
+                return 'src/components/list/templates/controls/' + control + '.html';
+            };
+
+            scope.$watch('searchExpression',function(searchExp){
+                if(searchExp && searchExp.length > 0){
+                    var regex = new RegExp( searchExp, 'i');
+                    scope.list = listData.filter(function(listItem){
+                        for(key in listItem.descFields){
+                            if(regex.test(listItem.descFields[key])){
+                                return true;
+                            }
+                        }
+                        return false;
+                    });
+                } else {
+                    scope.list = listData;
+                }
+            });
         }
     }
 });

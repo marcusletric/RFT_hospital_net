@@ -5,8 +5,8 @@
  * Created by Administrator on 2015.12.08..
  */
 hospitalNet.config(function(entityDefinitions){
-    entityDefinitions.betegseg = {
-        table: 'betegsegek',
+    entityDefinitions.helyseg = {
+        table: 'helyseg',
         dataFields: {
             szam: {
                 desc: 'Szobaszám',

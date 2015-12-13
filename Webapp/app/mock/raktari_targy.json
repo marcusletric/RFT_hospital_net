@@ -1,33 +1,41 @@
 [
   {
+    "id"  : 1,
     "tipus" : "Gyógyszer",
     "nev" : "Advil ultra forte 40db"
   },
   {
+    "id"  : 2,
     "tipus" : "Gyógyszer",
     "nev" : "JutaVit 30db"
   },
   {
+    "id"  : 3,
     "tipus" : "Gyógyszer",
     "nev" : "Bilagit 20db"
   },
   {
+    "id"  : 4,
     "tipus" : "Gyógyszer",
     "nev" : "Cavinton 60db"
   },
   {
+    "id"  : 5,
     "tipus" : "Gyógyszer",
     "nev" : "Salvequick sebtapasz combi"
   },
   {
+    "id"  : 6,
     "tipus" : "Kötszer",
     "nev" : "Fásli 300m"
   },
   {
+    "id"  : 7,
     "tipus" : "Kötszer",
     "nev" : ""
   },
   {
+    "id"  : 8,
     "tipus" : "",
     "nev" : ""
   }
