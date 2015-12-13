@@ -8,6 +8,7 @@ hospitalNet.config(function(entityDefinitions){
             betegID: {
                 desc: 'Beteg',
                 type: 'select',
+                options: {dynamicData: {table:'szemely',filter:{'tipus':'beteg'}}},
                 reqired: true
             },
             OrvosID: {

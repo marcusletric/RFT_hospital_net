@@ -1,7 +1,11 @@
 /**
  * Created by Administrator on 2015.12.09..
  */
-hospitalNet.service('dataService',function($http, $q, backendConfig){
+hospitalNet.run(function($rootScope){
+    $rootScope.loading = false;
+});
+
+hospitalNet.service('dataService',function($http, $q, backendConfig, $rootScope){
     var backendUrl = 'http://' + backendConfig.address;
 
     var reqCnf = function(url,data,mock){
@@ -15,10 +19,14 @@ hospitalNet.service('dataService',function($http, $q, backendConfig){
 
     this.getData = function(table,filterCondition){
         var deferred = $q.defer();
-        $http(reqCnf(backendUrl,{'table' : table, 'filter':filterCondition},true)).then(function(res){
+        $rootScope.loading = true;
+        $http(reqCnf(backendUrl,{'table' : table, 'filter':filterCondition})).then(function(res){
             deferred.resolve(res.data);
+            $rootScope.loading = false;
         },function(err){
+            $.notify("Hiba történt a kiszolgáló elérése során", "error");
             deferred.reject(err);
+            $rootScope.loading = false;
         });
 
         return deferred.promise;
@@ -27,10 +35,14 @@ hospitalNet.service('dataService',function($http, $q, backendConfig){
     this.setData = function(table,dataSet){
         var deferred = $q.defer();
         dataSet['table']=table;
-        $http(reqCnf(backendUrl,dataSet,true)).then(function(res){
+        $rootScope.loading = true;
+        $http(reqCnf(backendUrl,dataSet)).then(function(res){
             deferred.resolve(res.data);
+            $rootScope.loading = false;
         },function(err){
+            $.notify("Hiba történt a kiszolgáló elérése során", "error");
             deferred.reject(err);
+            $rootScope.loading = false;
         });
 
         return deferred.promise;

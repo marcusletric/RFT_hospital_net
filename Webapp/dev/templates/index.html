@@ -36,6 +36,26 @@
     </ul>
 
     <div class="main_screen" ui-view></div>
+    <div class="loading-overlay" ng-if="loading">
+      <div class="loading-indicator">
+        <div>
+          <img src="assets/images/loading.svg" />
+        </div>
+        <div>
+          <img src="assets/images/loading.svg" />
+        </div>
+        <div>
+          <img src="assets/images/loading.svg" />
+        </div>
+        <div>
+          <img src="assets/images/loading.svg" />
+        </div>
+        <div>
+          <div></div>
+        </div>
+        <div class="text">Betöltés...</div>
+      </div>
+    </div>
   </div>
 
   <!-- In production use:

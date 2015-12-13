@@ -26,7 +26,7 @@ hospitalNet.directive('form', function(dataService){
                 dataService.setData(scope.objectDef.table,dataset).then(function(){
                     $.notify("Az adatokat sikeresen elmentettük.", "success");
                 },function(){
-                    $.notify("Hiba történt a kiszolgáló elérése során", "error");
+                    $.notify("Hiba történt az adatok mentése során.", "error");
                 });
             }
         }
