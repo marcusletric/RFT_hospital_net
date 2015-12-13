@@ -9,6 +9,17 @@ hospitalNet.directive('chart',function(){
             objectDef: '='
         },
         link: function (scope,element) {
+
+            function composeChartConfig(){
+                return {
+
+                };
+            }
+
+            function composeChartData(){
+
+            }
+
             $(element).highcharts({
                 title: {
                     text: 'Monthly Average Temperature',

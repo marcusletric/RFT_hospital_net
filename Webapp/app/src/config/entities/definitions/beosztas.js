@@ -8,6 +8,7 @@ hospitalNet.config(function(entityDefinitions){
             dolgozoID: {
                 desc: 'Munkatárs',
                 type: 'select',
+                options: {dynamicData: {table:'szemely',filter:null}},
                 reqired: true
             },
             datum: {

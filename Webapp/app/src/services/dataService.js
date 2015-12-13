@@ -36,7 +36,7 @@ hospitalNet.service('dataService',function($http, $q, backendConfig, $rootScope)
     this.getData = function(table,filterCondition){
         var deferred = $q.defer();
         self.setLoadingState(1);
-        $http(reqCnf(backendUrl,{'table' : table, 'filter':filterCondition},true)).then(function(res){
+        $http(reqCnf(backendUrl,{'table' : table, 'filter':angular.toJson(filterCondition)})).then(function(res){
             deferred.resolve(res.data);
             self.setLoadingState(-1);
         },function(err){
@@ -50,9 +50,11 @@ hospitalNet.service('dataService',function($http, $q, backendConfig, $rootScope)
 
     this.setData = function(table,dataSet){
         var deferred = $q.defer();
-        dataSet['table']=table;
+        var postData = {};
+        postData.table = table;
+        postData.data = angular.toJson(dataSet);
         self.setLoadingState(1);
-        $http(reqCnf(backendUrl,dataSet)).then(function(res){
+        $http(reqCnf(backendUrl,postData)).then(function(res){
             deferred.resolve(res.data);
             self.setLoadingState(-1);
         },function(err){

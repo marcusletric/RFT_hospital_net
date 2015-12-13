@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="form-footer">
-        <button type="button" ng-disabled="thisForm.$error.required" class="btn btn-primary" ng-click="saveData()"><span class="glyphicon glyphicon-ok"></span> Mentés</button>
+        <button type="button" ng-disabled="thisForm.$error.required || thisForm.$error.min" class="btn btn-primary" ng-click="saveData()"><span class="glyphicon glyphicon-ok"></span> Mentés</button>
         <a href="javascrip:;" ng-click="back();" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Elvetés</a>
     </div>
 </form>

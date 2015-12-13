@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2015.12.06..
  */
-hospitalNet.directive('form', function($stateParams,$rootScope,$window,dataService){
+hospitalNet.directive('form', function($stateParams,$rootScope,$window,dataService,$filter){
     return {
         restrict: 'C',
         templateUrl: 'src/components/form/templates/formTemplate.html',
@@ -27,10 +27,14 @@ hospitalNet.directive('form', function($stateParams,$rootScope,$window,dataServi
                 for (field in scope.objectDef.dataFields){
                     scope[field] && scope[field].toString().length > 0 ? dataset[field]=scope[field] : '';
                 }
+                for(key in dataset){
+                    if(angular.isDate(dataset[key])){
+                        dataset[key] = $filter('date')(dataset[key], 'yyyy-MM-dd')
+                    }
+                }
+
                 dataService.setData(scope.objectDef.table,dataset).then(function(){
                     $.notify("Az adatokat sikeresen elmentettük.", "success");
-                },function(){
-                    $.notify("Hiba történt az adatok mentése során.", "error");
                 });
             };
 
