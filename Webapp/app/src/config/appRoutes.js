@@ -50,7 +50,12 @@ hospitalNet.constant('routes', [
         },
         {
             name: 'Kimutatás render',
-            href: 'kimutatas_render'
+            href: 'kimutatas_render',
+            params: {
+                'data': null
+                /*'idoszak_kezd': null,
+                'idoszak_vege': null*/
+            }
         }
     ]
 );

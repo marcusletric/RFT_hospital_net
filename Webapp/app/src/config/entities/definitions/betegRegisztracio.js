@@ -3,7 +3,8 @@
  */
 hospitalNet.config(function(entityDefinitions) {
     entityDefinitions.betegRegisztracio = {
-        table: 'szemely',
+        table: 'szemelyek',
+        entity: 'szemely',
         dataFields: {
             vezeteknev: {
                 desc: 'Vezetéknév',
@@ -24,6 +25,22 @@ hospitalNet.config(function(entityDefinitions) {
             jelszo: {
                 desc: 'Jelszó',
                 type: 'password',
+                reqired: false,
+                disabled: true
+            },
+            tipus: {
+                desc: 'Típus',
+                type: 'select',
+                options: {
+                    staticData: [
+                        {id: 'orvos', label: 'Orvos'},
+                        {id: 'beteg', label: 'Beteg'},
+                        {id: 'recepcios', label: 'Recepcios'},
+                        {id: 'recepcios', label: 'Raktarfelugyelo'},
+                        {id: 'recepcios', label: 'Vezeto'}
+                    ]
+                },
+                defaultValue: 1,
                 reqired: false,
                 disabled: true
             },

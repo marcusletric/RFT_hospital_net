@@ -8,13 +8,27 @@ hospitalNet.config(function(entityDefinitions){
             betegID: {
                 desc: 'Beteg',
                 type: 'select',
-                options: {dynamicData: {table:'szemely',filter:{'tipus':'beteg'}}},
+                options: {
+                    dynamicData: {
+                        table: 'szemelyek',
+                        entity: 'szemely',
+                        labelFields: ['vezeteknev', 'keresztnev'],
+                        filter: {'tipus':'beteg'}
+                    }
+                },
                 reqired: true
             },
             OrvosID: {
                 desc: 'Orvos',
                 type: 'select',
-                options: {dynamicData: {table:'szemely',filter:{'tipus':'orvos'}}},
+                options: {
+                    dynamicData: {
+                        table: 'szemelyek',
+                        entity: 'szemely',
+                        labelFields: ['vezeteknev', 'keresztnev'],
+                        filter: {'tipus': 'orvos'}
+                    }
+                },
                 reqired: true
             },
             szobaID: {

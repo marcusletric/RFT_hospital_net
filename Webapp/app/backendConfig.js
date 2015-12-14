@@ -1,3 +1,3 @@
 hospitalNet.constant("backendConfig",{
-  "address": "localhost:8000"
+  "address": "192.168.2.7:8001/hospitalNet_srv"
 });

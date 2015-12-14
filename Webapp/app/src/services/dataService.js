@@ -33,11 +33,16 @@ hospitalNet.service('dataService',function($http, $q, backendConfig, $rootScope)
         }
     };
 
-    this.getData = function(table,filterCondition){
+    this.getData = function(table,entity,filterCondition){
         var deferred = $q.defer();
         self.setLoadingState(1);
-        $http(reqCnf(backendUrl,{'table' : table, 'filter':angular.toJson(filterCondition)})).then(function(res){
-            deferred.resolve(res.data);
+        $http(reqCnf(backendUrl,{'fuggveny':'listazas', 'table' : table, 'data':angular.toJson(filterCondition)})).then(function(res){
+            if(res.data[table] && !angular.isArray(res.data[table][entity]) && angular.isObject(res.data[table][entity])){
+                var newList = [];
+                newList.push(res.data[table][entity]);
+                res.data[table][entity] = newList;
+            }
+            deferred.resolve(res.data[table] && res.data[table][entity]);
             self.setLoadingState(-1);
         },function(err){
             deferred.reject(err);
@@ -51,6 +56,25 @@ hospitalNet.service('dataService',function($http, $q, backendConfig, $rootScope)
     this.setData = function(table,dataSet){
         var deferred = $q.defer();
         var postData = {};
+        postData.table = table;
+        postData.data = angular.toJson(dataSet);
+        self.setLoadingState(1);
+        $http(reqCnf(backendUrl,postData)).then(function(res){
+            deferred.resolve(res.data);
+            self.setLoadingState(-1);
+        },function(err){
+            deferred.reject(err);
+            self.err++;
+            self.setLoadingState(-1);
+        });
+
+        return deferred.promise;
+    };
+
+    this.saveData = function(table,dataSet){
+        var deferred = $q.defer();
+        var postData = {};
+        postData.fuggveny = 'hozzaadas';
         postData.table = table;
         postData.data = angular.toJson(dataSet);
         self.setLoadingState(1);

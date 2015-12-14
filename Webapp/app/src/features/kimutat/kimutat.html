@@ -1,2 +1,7 @@
 <h3>Kimutatások</h3>
-<div class="form" object-def="entities.kimutatas"></div>
+<div ng-controller="kimutatasCtrl">
+    <div class="form" object-def="entities.kimutatas" get-data="getData"></div>
+    <div class="form-footer">
+        <button ng-click="kimutatas_render()" class="btn btn-primary"><span class="glyphicon glyphicon-blackboard"></span> Kimutatás készítése</button>
+    </div>
+</div>

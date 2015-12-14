@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2015.12.13..
  */
-hospitalNet.directive('chart',function(){
+hospitalNet.directive('chart',function(innerTransfer){
     return {
         restrict: 'E',
         templateUrl: 'src/components/chart/templates/chartTemplate.html',
@@ -9,6 +9,8 @@ hospitalNet.directive('chart',function(){
             objectDef: '='
         },
         link: function (scope,element) {
+
+            console.log(innerTransfer.get());
 
             function composeChartConfig(){
                 return {

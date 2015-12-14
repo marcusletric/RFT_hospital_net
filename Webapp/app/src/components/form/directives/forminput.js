@@ -24,7 +24,9 @@ hospitalNet.directive('formInput', function($compile,$http,dataService){
                         newElem.find('option').html(fieldDef.desc);
                         if(fieldDef.options.dynamicData){
                             asyncRender = true;
-                            dataService.getData(fieldDef.options.dynamicData.table,fieldDef.options.dynamicData.filter).then(function(options){
+                            var optionsDef = fieldDef.options.dynamicData;
+                            dataService.getData(optionsDef.table,optionsDef.entity,optionsDef.filter).then(function(options){
+                                options = processDynamicOptions(options,optionsDef);
                                 applySelectOptions(attrs['formField'],inputField,options);
                                 renderElement();
                             },function(){
@@ -45,12 +47,27 @@ hospitalNet.directive('formInput', function($compile,$http,dataService){
             );
 
             function renderElement(){
+                if(fieldDef.defaultValue){
+                    scope.$parent[attrs['formField']] = scope.$parent[attrs['formField'] + "_options"][fieldDef.defaultValue];
+                }
                 $compile(elem.contents())(scope.$parent);
+            }
+
+            function processDynamicOptions(data,definition){
+                var list = data;
+                angular.isArray(list) && list.forEach(function(item){
+                    var labelElements = [];
+                    definition.labelFields.forEach(function(labelField){
+                        labelElements.push(item[labelField]);
+                    });
+                    item.label = labelElements.join(' ');
+                });
+                return list;
             }
 
             function applySelectOptions(field, inputField, options){
                 scope.$parent[field + "_options"] = options;
-                inputField.attr({'ng-options' : "value as value.label for value in " + field + "_options track by value.id"});
+                inputField.attr({'ng-options' : "value.id as value.label for value in " + field + "_options track by value.id"});
             }
         }
     }

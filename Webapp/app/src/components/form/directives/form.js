@@ -7,7 +7,9 @@ hospitalNet.directive('form', function($stateParams,$rootScope,$window,dataServi
         templateUrl: 'src/components/form/templates/formTemplate.html',
         replace: true,
         scope: {
-            objectDef : '='
+            objectDef : '=',
+            saveControls : '=',
+            getData: '&'
         },
         link: function(scope){
             scope.leftInputs = {};
@@ -22,6 +24,8 @@ hospitalNet.directive('form', function($stateParams,$rootScope,$window,dataServi
                 $window.history.back();
             };
 
+            angular.isFunction(scope.getData()) && scope.getData()(scope);
+
             scope.saveData = function(){
                 var dataset = {};
                 for (field in scope.objectDef.dataFields){
@@ -31,9 +35,15 @@ hospitalNet.directive('form', function($stateParams,$rootScope,$window,dataServi
                     if(angular.isDate(dataset[key])){
                         dataset[key] = $filter('date')(dataset[key], 'yyyy-MM-dd')
                     }
+                    if(angular.isObject(dataset[key])){
+                        dataset[key] = dataset[key].id;
+                    }
                 }
 
-                dataService.setData(scope.objectDef.table,dataset).then(function(){
+                var postData = {};
+                postData[scope.objectDef.entity] = dataset;
+
+                dataService.saveData(scope.objectDef.table,postData).then(function(){
                     $.notify("Az adatokat sikeresen elmentettük.", "success");
                 });
             };

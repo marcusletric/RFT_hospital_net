@@ -9,12 +9,13 @@ hospitalNet.directive('list', function(dataService){
         link: function(scope,element,attrs){
             var condition = scope.$eval(attrs.condition);
             var table = attrs.table;
+            var entity = attrs.entity;
             var fields = scope.$eval(attrs.fields);
             var listData;
 
             scope.controls = scope.$eval(attrs.controls);
 
-            dataService.getData(table,condition).then(function(response){
+            dataService.getData(table,entity,condition).then(function(response){
                 processDatas(response);
             });
 
