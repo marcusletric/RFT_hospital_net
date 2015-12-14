@@ -5,7 +5,6 @@ import com.sun.net.httpserver.HttpServer;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.InetSocketAddress;
@@ -15,15 +14,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.velocity.tools.generic.ValueParser;
-
-import com.sun.net.httpserver.Headers;
-
 public class Server {
 
 	public static void main(String[] args) throws Exception {
         HttpServer server = HttpServer.create(new InetSocketAddress(8001), 0);
-        server.createContext("/test", new MyHandler());
+        server.createContext("/hospitalNet_srv", new MyHandler());
         server.setExecutor(null); // creates a default executor
         server.start();
     }
@@ -34,10 +29,19 @@ public class Server {
         	Utf8LenCounter UTFSize = new Utf8LenCounter();
 
         	exchange.getResponseHeaders().set("Content-Type", "text/html; charset=" + encoding);
-        	
+        	exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
         	Map<String,List<String>> postParams = this.decodePost(exchange);
-
-        	String response = postParams.get("he").get(0);
+        	String response = new String("");
+        	String fuggveny = postParams.get("fuggveny").get(0);
+        	if (fuggveny.compareTo("hozzaadas") == 0){      		
+        		response = AdatbazisModul.hozzaadas(postParams.get("table").get(0), postParams.get("data").get(0));
+        	}else if(fuggveny.compareTo("modositas") == 0){
+        		response = AdatbazisModul.modositas(postParams.get("table").get(0), postParams.get("data").get(0));
+        	}else if(fuggveny.compareTo("torles") == 0){
+        		response = AdatbazisModul.torles(postParams.get("table").get(0), postParams.get("data").get(0));
+        	}else if(fuggveny.compareTo("listazas") == 0){
+        		response = AdatbazisModul.listazas(postParams.get("table").get(0), postParams.get("data").get(0));
+        	}
         	exchange.sendResponseHeaders(200, UTFSize.length(response));
         	Writer out = new OutputStreamWriter(exchange.getResponseBody(), encoding);
         	out.write(response);
@@ -45,8 +49,6 @@ public class Server {
         }
         
         private Map<String,List<String>> decodePost(HttpExchange exchange) throws IOException {
-    		Headers reqHeaders = exchange.getRequestHeaders();
-    		String contentType = reqHeaders.getFirst("Content-Type");
     		String encoding = "UTF-8";
 
     		// read the query string from the request body
