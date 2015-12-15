@@ -3,7 +3,8 @@
  */
 hospitalNet.config(function(entityDefinitions){
     entityDefinitions.betegFelvetel = {
-        table: 'betegfelvetel',
+        table: 'beteg_fel_elbocs',
+        entity: 'felv_elbocs',
         dataFields: {
             betegID: {
                 desc: 'Beteg',
@@ -18,7 +19,7 @@ hospitalNet.config(function(entityDefinitions){
                 },
                 reqired: true
             },
-            OrvosID: {
+            orvosID: {
                 desc: 'Orvos',
                 type: 'select',
                 options: {
@@ -34,7 +35,14 @@ hospitalNet.config(function(entityDefinitions){
             szobaID: {
                 desc: 'Szoba',
                 type: 'select',
-                options: {dynamicData: {table:'helyseg'}},
+                options: {
+                    dynamicData: {
+                        table: 'szobak',
+                        entity: 'szoba',
+                        labelFields: ['szam'],
+                        filter: {'tipus': ['vizsgalo', 'elfekvo']}
+                    }
+                },
                 reqired: true
             },
             felvetel: {
@@ -48,7 +56,7 @@ hospitalNet.config(function(entityDefinitions){
                 reqired: false,
                 disabled: true
             },
-            elbocsatasOka: {
+            elbocsatas_ok: {
                 desc: 'Elbocsátás oka',
                 type: 'textarea',
                 reqired: false,

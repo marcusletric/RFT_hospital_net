@@ -9,10 +9,11 @@ hospitalNet.config(function(entityDefinitions){
                 desc: 'Kimutatás',
                 type: 'select',
                 options: {
-                    staticData: [{id: 'betegsegek', label: 'Betegségek'}, {
-                        id: 'beosztas',
-                        label: 'Beosztások'
-                    }, {id: 'raktar', label: 'Raktár'}]
+                    staticData: [
+                        {id: 'betegsegek', label: 'Betegségek'},
+                        {id: 'beosztas', label: 'Beosztások'},
+                        {id: 'raktar', label: 'Raktár'}
+                    ]
                 },
                 reqired: true
             },

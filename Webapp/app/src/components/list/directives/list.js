@@ -1,38 +1,72 @@
 /**
  * Created by Administrator on 2015.12.06..
  */
-hospitalNet.directive('list', function(dataService){
+hospitalNet.directive('list', function(dataService,$rootScope,$q){
     return {
         restrict: 'E',
         templateUrl: 'src/components/list/templates/listTemplate.html',
         replace: true,
         link: function(scope,element,attrs){
             var condition = scope.$eval(attrs.condition);
-            var table = attrs.table;
-            var entity = attrs.entity;
-            var fields = scope.$eval(attrs.fields);
+            var objDef = scope.$eval(attrs.objectDef);
+            var joinTables = scope.$eval(attrs.joinTables);
+            var table = objDef.table;
+            var entity = objDef.entity;
             var listData;
+            var joinData = {};
+            var loadPromises = [];
 
-            scope.controls = scope.$eval(attrs.controls);
-
-            dataService.getData(table,entity,condition).then(function(response){
-                processDatas(response);
+            joinTables && angular.isArray(joinTables) && joinTables.forEach(function(joinDef){
+                joinData[joinDef.joinField] = {};
+                loadPromises.push(dataService.getData(joinDef.entityDef.table,joinDef.entityDef.entity,joinDef.condition).then(function(response){
+                    joinData[joinDef.joinField].data = response;
+                    joinData[joinDef.joinField].definition = joinDef;
+                }));
             });
 
-            function processDatas(data){
-                var i = 0;
-                for(index in data){
-                    var descFields={};
-                    for(key in data[index]){
-                        if(fields.indexOf(key) > -1){
-                            descFields[key] = data[index][key];
+            scope.fields = scope.$eval(attrs.fields);
+            scope.controls = scope.$eval(attrs.controls);
+            scope.fieldDef = {};
+            for(key in objDef.dataFields){
+                scope.fieldDef[key] = objDef.dataFields[key];
+            }
+
+            loadPromises.push(dataService.getData(table,entity,condition).then(function(response){
+                listData = response;
+            }));
+
+            $q.all(loadPromises).then(function(){
+                processDatas();
+            });
+
+            function processDatas(){
+                for(index in listData){
+                    for(key in listData[index]){
+                        if(joinData[key]){
+                            var oldFieldDef = joinData[key].definition.entityDef.dataFields;
+                            var joinableRows = joinData[key].data.filter(function(joinRow){
+                                return joinRow.id == listData[index][key];
+                            });
+                            for(joinRowFieldKey in joinableRows[0]){
+                                var newFieldName = joinData[key].definition.alias + '_' + joinRowFieldKey;
+                                listData[index][newFieldName] = joinableRows[0][joinRowFieldKey];
+                                scope.fieldDef[newFieldName] = oldFieldDef[joinRowFieldKey];
+                            }
                         }
                     }
-                    data[i].descFields = descFields;
+                }
+                var i = 0;
+                for(index in listData){
+                    var descFields={};
+                    for(var j in scope.fields){
+                        if($rootScope.Utils.keys(listData[index]).indexOf(scope.fields[j]) > -1){
+                            descFields[j] = listData[index][scope.fields[j]];
+                        }
+                    }
+                    listData[i].descFields = descFields;
                     i++;
                 }
-                listData = data;
-                scope.list = data;
+                scope.list = listData;
             }
 
             scope.getControlTemplate = function(control){

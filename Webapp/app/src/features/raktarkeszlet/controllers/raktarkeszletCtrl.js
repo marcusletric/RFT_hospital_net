@@ -1,7 +1,9 @@
 /**
  * Created by Administrator on 2015.12.13..
  */
-hospitalNet.controller('raktarCtrl',function($scope,$state){
+hospitalNet.controller('raktarkeszletCtrl',function($scope,$state){
+    $scope.targyID = $state.params['id'];
+
     $scope.deleteItem = function(itemID){
 
     };
@@ -19,6 +21,6 @@ hospitalNet.controller('raktarCtrl',function($scope,$state){
     };
 
     $scope.fillSet = function(){
-        $state.go('keszletfeltoltes');
+        $state.go('raktarkeszlet');
     }
 });

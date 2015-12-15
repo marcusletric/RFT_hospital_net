@@ -3,11 +3,18 @@
  */
 hospitalNet.config(function(entityDefinitions){
     entityDefinitions.raktariTargy = {
-        table: 'raktari_targy',
+        table: 'targyak',
+        entity: 'targy',
         dataFields: {
             tipus: {
                 desc: 'Típus',
-                type: 'text',
+                type: 'select',
+                options: {
+                    staticData: [
+                        {id: 'gyogyszer', label: 'Gyógyszer'},
+                        {id: 'kotszer', label: 'Kötszer'}
+                    ]
+                },
                 reqired: true
             },
             nev: {

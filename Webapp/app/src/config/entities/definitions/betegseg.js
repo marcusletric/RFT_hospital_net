@@ -4,6 +4,7 @@
 hospitalNet.config(function(entityDefinitions){
     entityDefinitions.betegseg = {
         table: 'betegsegek',
+        entity: 'betegseg',
         dataFields: {
             betegID: {
                 desc: 'Beteg',

@@ -36,6 +36,12 @@ hospitalNet.service('dataService',function($http, $q, backendConfig, $rootScope)
     this.getData = function(table,entity,filterCondition){
         var deferred = $q.defer();
         self.setLoadingState(1);
+        for(key in filterCondition){
+            if(!angular.isArray(filterCondition[key])){
+                filterCondition[key] = [filterCondition[key]];
+            }
+        }
+
         $http(reqCnf(backendUrl,{'fuggveny':'listazas', 'table' : table, 'data':angular.toJson(filterCondition)})).then(function(res){
             if(res.data[table] && !angular.isArray(res.data[table][entity]) && angular.isObject(res.data[table][entity])){
                 var newList = [];
@@ -56,6 +62,7 @@ hospitalNet.service('dataService',function($http, $q, backendConfig, $rootScope)
     this.setData = function(table,dataSet){
         var deferred = $q.defer();
         var postData = {};
+        postData.fuggveny = 'modositas';
         postData.table = table;
         postData.data = angular.toJson(dataSet);
         self.setLoadingState(1);

@@ -1,0 +1,8 @@
+<h3>Felvett betegek</h3>
+<div class="list-view" ng-controller="betegfelvetelekCtrl">
+    <list object-def="entities.betegFelvetel"
+          condition=""
+          join-tables="[{entityDef:entities.betegRegisztracio, joinField:'betegID', alias:'beteg'},{entityDef:entities.helyseg, joinField:'szobaID', alias:'szoba'}]"
+          fields="['felvetel','beteg_taj','beteg_vezeteknev','beteg_keresztnev','szoba_szam']"
+          controls="['release','modify','delete']" ></list>
+</div>

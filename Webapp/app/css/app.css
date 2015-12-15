@@ -275,56 +275,72 @@ body {
       bottom: 52px;
       right: 0;
       overflow-y: auto; }
-      .app_canvas .main_screen .list-container .list-item {
+      .app_canvas .main_screen .list-container .list-table {
         display: table;
-        width: 100%;
-        margin-bottom: 5px;
-        border-radius: 4px;
-        border: 1px solid #aaaaaa;
-        padding: 0 5px; }
-        .app_canvas .main_screen .list-container .list-item:hover {
-          border: 1px solid #444444;
-          box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2); }
-        .app_canvas .main_screen .list-container .list-item div {
-          line-height: 32px;
-          display: inline-block; }
-      .app_canvas .main_screen .list-container .item-controls {
-        display: inline-block;
-        float: right;
-        line-height: 32px; }
-        .app_canvas .main_screen .list-container .item-controls .item-control {
-          display: inline-block;
-          position: relative;
-          float: left;
-          width: 28px;
-          height: 28px;
-          border: 1px solid #aaaaaa;
-          border-radius: 2px;
-          margin: 2px;
-          cursor: pointer; }
-          .app_canvas .main_screen .list-container .item-controls .item-control div {
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            text-align: center;
-            line-height: 28px; }
-          .app_canvas .main_screen .list-container .item-controls .item-control:hover {
-            background-color: #ffd409;
-            border: 1px solid #444444; }
-            .app_canvas .main_screen .list-container .item-controls .item-control:hover .overlay {
+        border-collapse: collapse;
+        border-spacing: 5px;
+        width: 100%; }
+        .app_canvas .main_screen .list-container .list-table .list-item, .app_canvas .main_screen .list-container .list-table .list-head {
+          width: 100%;
+          height: 34px;
+          display: table-row;
+          padding: 0 5px;
+          border: 1px solid #aaaaaa; }
+          .app_canvas .main_screen .list-container .list-table .list-item:hover, .app_canvas .main_screen .list-container .list-table .list-head:hover {
+            background-color: #eeeeee; }
+            .app_canvas .main_screen .list-container .list-table .list-item:hover > div, .app_canvas .main_screen .list-container .list-table .list-head:hover > div {
+              box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2); }
+          .app_canvas .main_screen .list-container .list-table .list-item .desc-field, .app_canvas .main_screen .list-container .list-table .list-head .desc-field {
+            display: table-cell;
+            vertical-align: middle;
+            padding: 0 10px;
+            white-space: nowrap; }
+        .app_canvas .main_screen .list-container .list-table .list-head {
+          border: none; }
+          .app_canvas .main_screen .list-container .list-table .list-head .head-cell {
+            display: table-cell;
+            font-weight: bold;
+            font-size: 14px;
+            padding: 0 10px; }
+        .app_canvas .main_screen .list-container .list-table .placeholder {
+          display: table-cell;
+          width: 100%; }
+        .app_canvas .main_screen .list-container .list-table .item-controls {
+          display: table-cell;
+          white-space: nowrap;
+          line-height: 0; }
+          .app_canvas .main_screen .list-container .list-table .item-controls .item-control {
+            display: inline-block;
+            position: relative;
+            width: 28px;
+            height: 28px;
+            border: 1px solid #aaaaaa;
+            border-radius: 2px;
+            margin: 2px;
+            cursor: pointer; }
+            .app_canvas .main_screen .list-container .list-table .item-controls .item-control div {
               position: absolute;
               top: 0;
               left: 0;
               bottom: 0;
               right: 0;
-              -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.4), 0 1px 2px rgba(0, 0, 0, 0.2);
-              box-shadow: inset 0 1px rgba(255, 255, 255, 0.4), 0 1px 2px rgba(0, 0, 0, 0.2);
-              background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.12) 51%, rgba(0, 0, 0, 0.04));
-              background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.12) 51%, rgba(0, 0, 0, 0.04));
-              background-image: -o-linear-gradient(top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.12) 51%, rgba(0, 0, 0, 0.04));
-              background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.12) 51%, rgba(0, 0, 0, 0.04)); }
+              text-align: center;
+              line-height: 28px; }
+            .app_canvas .main_screen .list-container .list-table .item-controls .item-control:hover {
+              background-color: #ffd409;
+              border: 1px solid #444444; }
+              .app_canvas .main_screen .list-container .list-table .item-controls .item-control:hover .overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.4), 0 1px 2px rgba(0, 0, 0, 0.2);
+                box-shadow: inset 0 1px rgba(255, 255, 255, 0.4), 0 1px 2px rgba(0, 0, 0, 0.2);
+                background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.12) 51%, rgba(0, 0, 0, 0.04));
+                background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.12) 51%, rgba(0, 0, 0, 0.04));
+                background-image: -o-linear-gradient(top, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.12) 51%, rgba(0, 0, 0, 0.04));
+                background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.12) 51%, rgba(0, 0, 0, 0.04)); }
     .app_canvas .main_screen chart {
       position: absolute;
       top: 0;
@@ -364,7 +380,7 @@ body {
           .app_canvas .menu li a .icon img {
             width: 40px;
             height: 40px;
-            margin: 5px;
+            margin: 5px 0;
             border: none; }
         .app_canvas .menu li a span {
           transition: all 0.3s;

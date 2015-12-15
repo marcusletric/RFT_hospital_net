@@ -1,9 +1,10 @@
 /**
  * Created by Administrator on 2015.12.08..
  */
-hospitalNet.config(function(entityDefinitions) {
+hospitalNet.run(function(entityDefinitions,$filter) {
     entityDefinitions.gyogyszerKiiras = {
-        table: 'gyogyszer',
+        table: 'kiirasok',
+        entity: 'kiiras',
         dataFields: {
             betegID: {
                 desc: 'Beteg',
@@ -34,7 +35,13 @@ hospitalNet.config(function(entityDefinitions) {
             gyogyszerID: {
                 desc: 'Gyógyszer',
                 type: 'select',
-                options: {dynamicData: {table:'raktari_targy',filter:null}},
+                options: {
+                    dynamicData: {
+                        table: 'targyak',
+                        entity: 'targy',
+                        labelFields: ['nev']
+                    }
+                },
                 reqired: true
             },
             mennyiseg: {
@@ -51,6 +58,7 @@ hospitalNet.config(function(entityDefinitions) {
                 desc: 'Kiírás dátuma',
                 type: 'date',
                 reqired: true,
+                defaultValue: $filter('date')(new Date(),'yyyy-MM-dd'),
                 disabled: true
             }
         }

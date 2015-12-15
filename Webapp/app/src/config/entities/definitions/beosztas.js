@@ -3,12 +3,20 @@
  */
 hospitalNet.config(function(entityDefinitions){
     entityDefinitions.beosztas = {
-        table: 'beosztas',
+        table: 'beosztasok',
+        entity: 'beosztas',
         dataFields: {
             dolgozoID: {
                 desc: 'Munkatárs',
                 type: 'select',
-                options: {dynamicData: {table:'szemely',filter:null}},
+                options: {
+                    dynamicData: {
+                        table: 'szemelyek',
+                        entity: 'szemely',
+                        labelFields: ['vezeteknev', 'keresztnev'],
+                        filter: {'tipus': ['orvos','recepcios','raktarfelugyelo']}
+                    }
+                },
                 reqired: true
             },
             datum: {
@@ -16,12 +24,12 @@ hospitalNet.config(function(entityDefinitions){
                 type: 'date',
                 reqired: true
             },
-            kezdete: {
+            mettol: {
                 desc: 'Kezdés',
                 type: 'time',
                 reqired: true
             },
-            vege: {
+            meddig: {
                 desc: 'Vége',
                 type: 'time',
                 reqired: true

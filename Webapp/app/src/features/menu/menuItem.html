@@ -1,5 +1,5 @@
 <li ng-repeat="route in ::routes">
-    <a ui-sref="{{::route.href}}">
+    <a ui-sref="{{::route.href.split('?')[0]}}">
         <div class="icon">
             <img ng-src="assets/icons/{{::route.icon}}"/>
             <div class="overlay"></div>

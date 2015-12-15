@@ -9,45 +9,66 @@
   padding-right: 20px;
   @include stretch(95px, 20px, 52px, 0);
   overflow-y: auto;
-  .list-item {
+  .list-table {
     display: table;
+    border-collapse: collapse;
+    border-spacing: 5px;
     width: 100%;
-    margin-bottom: 5px;
-    border-radius: 4px;
-    border: 1px solid #aaaaaa;
-    padding: 0 5px;
-    &:hover {
-      border: 1px solid #444444;
-      box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
-    }
-    div {
-      line-height: 32px;
-      display: inline-block;
-    }
-  }
-  .item-controls {
-    display: inline-block;
-    float: right;
-    line-height: 32px;
-    .item-control {
-      display: inline-block;
-      position: relative;
-      float: left;
-      width: 28px;
-      height: 28px;
+    .list-item, .list-head {
+      width: 100%;
+      height: 34px;
+      display: table-row;
+      padding: 0 5px;
       border: 1px solid #aaaaaa;
-      border-radius: 2px;
-      margin: 2px;
-      cursor: pointer;
-      div {
-        @include stretch(0,0,0,0);
-        text-align: center;
-        line-height: 28px;
-      }
       &:hover {
-        background-color: #ffd409;
-        border: 1px solid #444444;
-        @include buttonOverlay();
+        background-color: #eeeeee;
+        & > div {
+          box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.2);
+        }
+      }
+      .desc-field {
+         display: table-cell;
+         vertical-align: middle;
+         padding: 0 10px;
+         white-space: nowrap;
+       }
+    }
+    .list-head {
+      border: none;
+      .head-cell {
+        display: table-cell;
+        font-weight: bold;
+        font-size: 14px;
+        padding: 0 10px;
+      }
+    }
+    .placeholder {
+       display: table-cell;
+       width: 100%;
+    }
+    .item-controls {
+      display: table-cell;
+      white-space: nowrap;
+      line-height: 0;
+      .item-control {
+        display: inline-block;
+        position: relative;
+        width: 28px;
+        height: 28px;
+        border: 1px solid #aaaaaa;
+        border-radius: 2px;
+        margin: 2px;
+        cursor: pointer;
+        div {
+          @include stretch(0, 0, 0, 0);
+          text-align: center;
+          line-height: 28px;
+        }
+        &:hover {
+          background-color: #ffd409;
+          border: 1px solid #444444;
+          @include buttonOverlay();
+        }
       }
     }
   }

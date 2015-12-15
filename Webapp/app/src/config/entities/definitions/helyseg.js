@@ -6,7 +6,8 @@
  */
 hospitalNet.config(function(entityDefinitions){
     entityDefinitions.helyseg = {
-        table: 'helyseg',
+        table: 'szobak',
+        entity: 'szoba',
         dataFields: {
             szam: {
                 desc: 'Szobaszám',
@@ -21,6 +22,14 @@ hospitalNet.config(function(entityDefinitions){
             tipus: {
                 desc: 'Típus',
                 type: 'select',
+                options: {
+                    staticData: [
+                        {id: 'elfekvo', label: 'Elfekvő'},
+                        {id: 'muto', label: 'Műtő'},
+                        {id: 'raktar', label: 'Raktár'},
+                        {id: 'vizsgalo', label: 'Vizsgáló'}
+                    ]
+                },
                 reqired: true
             }
         }

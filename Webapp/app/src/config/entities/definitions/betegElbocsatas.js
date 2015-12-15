@@ -2,9 +2,9 @@
  * Created by Administrator on 2015.12.08..
  */
 hospitalNet.config(function(entityDefinitions){
-    entityDefinitions.mutetElojegyzes = {
-        table: 'mutetek',
-        entity: 'mutet',
+    entityDefinitions.betegElbocsatas = {
+        table: 'beteg_fel_elbocs',
+        entity: 'felv_elbocs',
         dataFields: {
             betegID: {
                 desc: 'Beteg',
@@ -14,12 +14,13 @@ hospitalNet.config(function(entityDefinitions){
                         table: 'szemelyek',
                         entity: 'szemely',
                         labelFields: ['vezeteknev', 'keresztnev'],
-                        filter: {'tipus':'beteg'}
+                        filter: {'tipus': 'beteg'}
                     }
                 },
-                reqired: true
+                reqired: true,
+                disabled: true
             },
-            OrvosID: {
+            orvosID: {
                 desc: 'Orvos',
                 type: 'select',
                 options: {
@@ -30,27 +31,36 @@ hospitalNet.config(function(entityDefinitions){
                         filter: {'tipus': 'orvos'}
                     }
                 },
-                reqired: true
+                reqired: true,
+                disabled: true
             },
             szobaID: {
                 desc: 'Szoba',
                 type: 'select',
                 options: {
                     dynamicData: {
-                    table: 'szobak',
-                    entity: 'szoba',
-                    labelFields: ['szam'],
-                    filter: {'tipus': 'muto'}
-                }},
-                reqired: true
+                        table: 'szobak',
+                        entity: 'szoba',
+                        labelFields: ['szam'],
+                        filter: {'tipus': ['vizsgalo', 'elfekvo']}
+                    }
+                },
+                reqired: true,
+                disabled: true
             },
-            datum: {
-                desc: 'Dátum',
+            felvetel: {
+                desc: 'Felvétel ideje',
+                type: 'date',
+                reqired: true,
+                disabled: true
+            },
+            elbocsatas: {
+                desc: 'Elbocsátás ideje',
                 type: 'date',
                 reqired: true
             },
-            csapat: {
-                desc: 'Műtőcsapat',
+            elbocsatas_ok: {
+                desc: 'Elbocsátás oka',
                 type: 'textarea',
                 reqired: false
             }

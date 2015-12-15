@@ -16,7 +16,7 @@ hospitalNet.directive('formInput', function($compile,$http,dataService){
                     inputField = newElem.is(inputSelectors) ? newElem : newElem.find(inputSelectors);
                     inputField.attr({
                         'ng-model' : attrs['formField'],
-                        'ng-focus' : attrs['formField'] + '_opened=true;',
+                        'ng-click' : attrs['formField'] + '_opened=true;',
                         'placeholder' : fieldDef.desc,
                         'is-open': attrs['formField'] + '_opened'
                     });
@@ -48,9 +48,10 @@ hospitalNet.directive('formInput', function($compile,$http,dataService){
 
             function renderElement(){
                 if(fieldDef.defaultValue){
-                    scope.$parent[attrs['formField']] = scope.$parent[attrs['formField'] + "_options"][fieldDef.defaultValue];
+                    scope.$parent[attrs['formField']] = (fieldDef.options ? scope.$parent[attrs['formField'] + "_options"][fieldDef.defaultValue]:fieldDef.defaultValue);
                 }
                 $compile(elem.contents())(scope.$parent);
+                scope.$emit('elementRendered');
             }
 
             function processDynamicOptions(data,definition){

@@ -13,8 +13,23 @@ hospitalNet.constant('routes', [
         },
         {
             name: 'Betegfelvétel',
-            href: 'betegfelvetel',
+            href: 'betegfelvetel?id',
+            params: {
+                'id': null
+            },
             icon: 'illness.svg'
+        },
+        {
+            name: 'Felvett betegek',
+            href: 'betegfelvetelek',
+            icon: 'illness.svg'
+        },
+        {
+            name: 'Betegelbocsátás',
+            href: 'betegelbocsatas?id',
+            params: {
+                'id': null
+            }
         },
         {
             name: 'Gyógyszer kiírása',
@@ -38,9 +53,23 @@ hospitalNet.constant('routes', [
         },
         {
             name: 'Raktári egyed',
-            href: 'raktari_egyed?egyed_id',
+            href: 'raktari_egyed?id',
             params: {
-                'egyed_id': null
+                'id': null
+            }
+        },
+        {
+            name: 'Készletfeltöltés',
+            href: 'keszletfeltoltes?id',
+            params: {
+                'id': null
+            }
+        },
+        {
+            name: 'Raktárkészlet',
+            href: 'raktarkeszlet?id',
+            params: {
+                'id': null
             }
         },
         {
@@ -50,12 +79,7 @@ hospitalNet.constant('routes', [
         },
         {
             name: 'Kimutatás render',
-            href: 'kimutatas_render',
-            params: {
-                'data': null
-                /*'idoszak_kezd': null,
-                'idoszak_vege': null*/
-            }
+            href: 'kimutatas_render'
         }
     ]
 );

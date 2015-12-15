@@ -1,0 +1,11 @@
+<h3>Raktárkészlet módosítása</h3>
+<div class="list-view" ng-controller="raktarkeszletCtrl">
+    <list object-def="entities.raktariPeldany"
+          condition="{targyID: ['{{targyID}}']}"
+          join-tables="[{entityDef:entities.raktariTargy, joinField:'targyID', alias:'targy'}]"
+          fields="['id','szavatossag', 'targy_nev']"
+          controls="['delete']" ></list>
+    <div class="form-footer">
+        <button type="button" class="btn btn-primary" ng-click="addItem()"><span class="glyphicon glyphicon-plus"></span> Új elem hozzáadása</button>
+    </div>
+</div>
