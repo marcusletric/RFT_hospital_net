@@ -1,8 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +11,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -40,146 +36,153 @@ public class AdatbazisModul {
 
 	public static String dbPath = new String("src/xml/");
 	
-    public static String modositas(String xmlNev, String jsonStr) throws JSONException {
-        JSONObject jsonObj = new JSONObject(jsonStr);
-        String xmlStr = XML.toString(jsonObj);
-
+    public static String modositas(String xmlNev, String jsonStr) {
+        String eredmeny = "false";
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
         try {
+            JSONObject jsonObj = new JSONObject(jsonStr);
+            String xmlStr = XML.toString(jsonObj);
+
             DocumentBuilder db = dbf.newDocumentBuilder();
-            Document xml = db.parse(new InputSource(new StringReader(xmlStr)));
-            Document doc = db.parse(dbPath + xmlNev + ".xml");
+            Document jsonXml = db.parse(new InputSource(new StringReader(xmlStr)));
+            Document xml = db.parse(dbPath + xmlNev + ".xml");
 
-            NodeList nl = doc.getElementsByTagName(xml.getDocumentElement().getNodeName());
-            NodeList n = xml.getElementsByTagName("id");
-            NodeList rt = xml.getDocumentElement().getChildNodes();
+            NodeList xmlNodeList = xml.getElementsByTagName(jsonXml.getDocumentElement().getNodeName());
+            NodeList jsonIdList = jsonXml.getElementsByTagName("id");
+            NodeList jsonChildList = jsonXml.getDocumentElement().getChildNodes();
 
-            for (int i = 0; i < nl.getLength(); i++) {
-                Element elem = (Element) nl.item(i);
-                if (elem.getAttribute("id").equals(n.item(0).getTextContent())) {
-                    for (int j = 0; j < rt.getLength(); j++) {
-                        elem.getElementsByTagName(rt.item(j).getNodeName()).item(0).setTextContent(rt.item(j).getTextContent());
+            for (int i = 0; i < xmlNodeList.getLength(); i++) {
+                Element elem = (Element) xmlNodeList.item(i);
+                String id = elem.getElementsByTagName("id").item(0).getTextContent();
+                if (id.equals(jsonIdList.item(0).getTextContent())) {
+                    eredmeny = "true";
+                    for (int j = 0; j < jsonChildList.getLength(); j++) {
+                        elem.getElementsByTagName(jsonChildList.item(j).getNodeName()).item(0).setTextContent(jsonChildList.item(j).getTextContent());
                     }
                 }
             }
 
+            xml.normalize();
+
             TransformerFactory tf = TransformerFactory.newInstance();
             Transformer t = tf.newTransformer();
-            DOMSource source = new DOMSource(doc);
+            DOMSource source = new DOMSource(xml);
             StreamResult sr = new StreamResult(new File(dbPath + xmlNev + ".xml"));
             t.transform(source, sr);
+
+        } catch (JSONException ex) {
+            return "false";
         } catch (TransformerException ex) {
-            Logger.getLogger(AdatbazisModul.class.getName()).log(Level.SEVERE, null, ex);
+            return "false";
         } catch (SAXException ex) {
-            Logger.getLogger(AdatbazisModul.class.getName()).log(Level.SEVERE, null, ex);
+            return "false";
         } catch (IOException ex) {
-            Logger.getLogger(AdatbazisModul.class.getName()).log(Level.SEVERE, null, ex);
+            return "false";
         } catch (ParserConfigurationException ex) {
-            Logger.getLogger(AdatbazisModul.class.getName()).log(Level.SEVERE, null, ex);
+            return "false";
         }
-        return new String("true");
+        return eredmeny;
     }
 
-    public static String hozzaadas(String xmlNev, String jsonStr) throws JSONException {
-        JSONObject jsonObj = new JSONObject(jsonStr);
-        String xmlStr = XML.toString(jsonObj);
-
+    public static String hozzaadas(String xmlNev, String jsonStr) {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         try {
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            Document xml = db.parse(new InputSource(new StringReader(xmlStr)));
-            Document doc = db.parse(dbPath + xmlNev + ".xml");
-            Element root = doc.getDocumentElement();
+            JSONObject jsonObj = new JSONObject(jsonStr);
+            String xmlStr = XML.toString(jsonObj);
 
-            NodeList nl = doc.getElementsByTagName(xml.getDocumentElement().getNodeName());
-            Integer nextID = nl.getLength()+1;
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document jsonXml = db.parse(new InputSource(new StringReader(xmlStr)));
+            Document xml = db.parse(dbPath + xmlNev + ".xml");
+
+            NodeList nl = xml.getElementsByTagName(jsonXml.getDocumentElement().getNodeName());
+			Integer nextID;            
+			if(nl.getLength() == 0){
+				nextID = 1;
+			} else {
+				nextID = Integer.parseInt(xml.getDocumentElement().getFirstChild().getLastChild().getElementsByTagName("id").item(0).getTextContent());
+			}
             
-            Element id = xml.createElement("id");
+            Element id = jsonXml.createElement("id");
             id.setTextContent(nextID.toString());
-            xml.getFirstChild().appendChild(id);
-            Node n = xml.getFirstChild();
+            jsonXml.getFirstChild().appendChild(id);
             
-            Node imp = doc.importNode(n, true);
+            Node imp = xml.importNode(jsonXml.getFirstChild(), true);
+            xml.getDocumentElement().appendChild(imp);
 
-            root.appendChild(imp);
-
-            doc.normalize();
+            xml.normalize();
 
             TransformerFactory tf = TransformerFactory.newInstance();
             Transformer t = tf.newTransformer();
-            DOMSource source = new DOMSource(doc);
+            DOMSource source = new DOMSource(xml);
             StreamResult sr = new StreamResult(new File(dbPath + xmlNev + ".xml"));
             t.transform(source, sr);
 
-
+        } catch (JSONException ex) {
+            return "false";
         } catch (TransformerException ex) {
-            Logger.getLogger(AdatbazisModul.class.getName()).log(Level.SEVERE, null, ex);
+            return "false";
         } catch (SAXException ex) {
-            Logger.getLogger(AdatbazisModul.class.getName()).log(Level.SEVERE, null, ex);
+            return "false";
         } catch (IOException ex) {
-            Logger.getLogger(AdatbazisModul.class.getName()).log(Level.SEVERE, null, ex);
+            return "false";
         } catch (ParserConfigurationException ex) {
-            Logger.getLogger(AdatbazisModul.class.getName()).log(Level.SEVERE, null, ex);
+            return "false";
         }
-        return new String("true");
+        return "true";
     }
 
-    public static String torles(String xmlNev, String jsonStr) throws JSONException {
-        JSONObject jsonObj = new JSONObject(jsonStr);
-        System.out.println(jsonObj);
-
-        int s = (Integer)jsonObj.get("id");
-
-        System.out.println(jsonObj.get("id"));
+    public static String torles(String xmlNev, String jsonStr) {
+        String eredmeny = "false";
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+
         try {
+            JSONObject jsonObj = new JSONObject(jsonStr);
+            int id = (Integer) jsonObj.get("id");
             DocumentBuilder db = dbf.newDocumentBuilder();
-            Document doc = db.parse(dbPath + xmlNev + ".xml");
-            NodeList nl = doc.getElementsByTagName(doc.getFirstChild().getFirstChild().getNodeName());
+            Document xml = db.parse(dbPath + xmlNev + ".xml");
+            NodeList xmlIdList = xml.getElementsByTagName("id");
 
-            System.out.println(nl.getLength());
-
-            for (int i = 0; i < nl.getLength(); i++) {
-                Element elem = (Element) nl.item(i);
-
-                NodeList elemNodeList = elem.getChildNodes();
-                for (int j = 0; j < elemNodeList.getLength(); j++) {
-                	if(elemNodeList.item(j).getNodeName().equals(new String("id")) &&
-                	   elemNodeList.item(j).getTextContent().equals(Integer.toString(s))	){
-                		elem.getParentNode().removeChild(elem);
-                	}
+            for (int i = 0; i < xmlIdList.getLength(); i++) {
+                Element elem = (Element) xmlIdList.item(i);
+                if (xmlIdList.item(i).getTextContent().equals(Integer.toString(id))) {
+                    eredmeny = "true";
+                    Node idParent = elem.getParentNode();
+                    idParent.getParentNode().removeChild(idParent);
                 }
             }
             TransformerFactory tf = TransformerFactory.newInstance();
             Transformer t = tf.newTransformer();
-            DOMSource source = new DOMSource(doc);
+            DOMSource source = new DOMSource(xml);
             StreamResult sr = new StreamResult(new File(dbPath + xmlNev + ".xml"));
             t.transform(source, sr);
 
+        } catch (JSONException ex) {
+            return "false";
         } catch (TransformerException ex) {
-            Logger.getLogger(AdatbazisModul.class.getName()).log(Level.SEVERE, null, ex);
+            return "false";
         } catch (SAXException ex) {
-            Logger.getLogger(AdatbazisModul.class.getName()).log(Level.SEVERE, null, ex);
+            return "false";
         } catch (IOException ex) {
-            Logger.getLogger(AdatbazisModul.class.getName()).log(Level.SEVERE, null, ex);
+            return "false";
         } catch (ParserConfigurationException ex) {
-            Logger.getLogger(AdatbazisModul.class.getName()).log(Level.SEVERE, null, ex);
+            return "false";
         }
-        return new String("true");
+        return eredmeny;
     }
 
 	public static String listazas(String xmlNev, String jsonStr) {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        StringWriter writer = new StringWriter();
+        String eredmeny = "";
+		StringWriter writer = new StringWriter();
         try {
             DocumentBuilder db = dbf.newDocumentBuilder();
-            Document doc = db.parse(dbPath + xmlNev + ".xml");
+            Document xml = db.parse(dbPath + xmlNev + ".xml");
             
             if(jsonStr.length() > 0 ){
             	JSONObject jsonObj = new JSONObject(jsonStr);
             	Object[] keySet = jsonObj.keySet().toArray();
-            	NodeList nl = doc.getElementsByTagName(doc.getChildNodes().item(0).getChildNodes().item(0).getNodeName());
+            	NodeList nl = xml.getElementsByTagName(xml.getChildNodes().item(0).getChildNodes().item(0).getNodeName());
             	
             	int i = 0;
             	while ( i < nl.getLength()) {
@@ -212,20 +215,22 @@ public class AdatbazisModul {
 	                }
 	            }
             }
-            DOMSource source = new DOMSource(doc);
+            DOMSource source = new DOMSource(xml);
             TransformerFactory tf = TransformerFactory.newInstance();
             Transformer t = tf.newTransformer();
             t.transform(source, new StreamResult(writer));
 
+		} catch (TransformerException ex) {
+        	return "";        
+		} catch (JSONException ex) {
+            return "";
         } catch (SAXException ex) {
-            Logger.getLogger(AdatbazisModul.class.getName()).log(Level.SEVERE, null, ex);
+            return "";
         } catch (IOException ex) {
-            Logger.getLogger(AdatbazisModul.class.getName()).log(Level.SEVERE, null, ex);
+            return "";
         } catch (ParserConfigurationException ex) {
-            Logger.getLogger(AdatbazisModul.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (TransformerException ex) {
-        	Logger.getLogger(AdatbazisModul.class.getName()).log(Level.SEVERE, null, ex);
-		}
+            return "";
+        }
         
 		return XML.toJSONObject(writer.getBuffer().toString()).toString();
 	}
