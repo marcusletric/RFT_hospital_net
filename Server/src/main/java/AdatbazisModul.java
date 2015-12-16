@@ -100,7 +100,7 @@ public class AdatbazisModul {
 			if(nl.getLength() == 0){
 				nextID = 1;
 			} else {
-				nextID = Integer.parseInt(xml.getDocumentElement().getFirstChild().getLastChild().getElementsByTagName("id").item(0).getTextContent());
+				nextID = Integer.parseInt(((Element) xml.getFirstChild().getLastChild()).getElementsByTagName("id").item(0).getTextContent()) + 1;
 			}
             
             Element id = jsonXml.createElement("id");

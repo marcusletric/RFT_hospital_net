@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><szobak><szoba>
+		<id>1</id>
+		<szam>101</szam>
+		<ferohely>5</ferohely>
+		<tipus>elfekvo</tipus>
+	</szoba>
+	<szoba>
+		<id>2</id>
+		<szam>13</szam>
+		<ferohely>2</ferohely>
+		<tipus>vizsgalo</tipus>
+	</szoba>
+	<szoba>
+		<id>3</id>
+		<szam>0B</szam>
+		<ferohely>300</ferohely>
+		<tipus>raktar</tipus>
+	</szoba>
+	<szoba>
+		<id>4</id>
+		<szam>M01</szam>
+		<ferohely>10</ferohely>
+		<tipus>muto</tipus>
+	</szoba>
+</szobak>
