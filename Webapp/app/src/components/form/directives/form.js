@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2015.12.06..
  */
-hospitalNet.directive('form', function($stateParams,$rootScope,$state,dataService,$filter){
+hospitalNet.directive('form', function($stateParams,$rootScope,$window,$state,dataService,$filter){
     return {
         restrict: 'C',
         templateUrl: 'src/components/form/templates/formTemplate.html',
@@ -24,9 +24,14 @@ hospitalNet.directive('form', function($stateParams,$rootScope,$state,dataServic
 
             scope.$on('elementRendered',function(){elementsToRender--;});
             var renderWatch = scope.$watch(function(){return elementsToRender;},function(remaining){
-                if(hasValidStateParam == remaining <1){
-                    loadData();
-                    renderWatch();
+                if( remaining <1){
+                    if(hasValidStateParam){
+                        loadData();
+                        renderWatch();
+                    } else {
+                        $rootScope.loading = false;
+                    }
+
                 }
             });
 
@@ -51,8 +56,11 @@ hospitalNet.directive('form', function($stateParams,$rootScope,$state,dataServic
                     (angular.isUndefined(field.save) || field.save) && scope[field] && scope[field].toString().length > 0 ? dataset[field]=scope[field] : '';
                 }
                 for(key in dataset){
-                    if(angular.isDate(dataset[key])){
+                    if(scope.objectDef.dataFields[key].type=='date'){
                         dataset[key] = $filter('date')(dataset[key], 'yyyy-MM-dd')
+                    }
+                    if(scope.objectDef.dataFields[key].type=='time'){
+                        dataset[key] = $filter('date')(dataset[key], 'HH:mm');
                     }
                     if(angular.isObject(dataset[key])){
                         dataset[key] = dataset[key].id;
@@ -68,7 +76,7 @@ hospitalNet.directive('form', function($stateParams,$rootScope,$state,dataServic
 
                 dataService[(hasValidStateParam ? 'setData' : 'saveData')](scope.objectDef.table,postData).then(function(){
                     $.notify("Az adatokat sikeresen elmentettük.", "success");
-                    $state.go($state.getName());
+                    $rootScope.reloadView();
                 });
             };
 

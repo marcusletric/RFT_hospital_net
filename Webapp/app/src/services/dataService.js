@@ -96,4 +96,23 @@ hospitalNet.service('dataService',function($http, $q, backendConfig, $rootScope)
 
         return deferred.promise;
     };
+
+    this.deleteRecord = function(table,dataSet){
+        var deferred = $q.defer();
+        var postData = {};
+        postData.fuggveny = 'torles';
+        postData.table = table;
+        postData.data = angular.toJson(dataSet);
+        self.setLoadingState(1);
+        $http(reqCnf(backendUrl,postData)).then(function(res){
+            deferred.resolve(res.data);
+            self.setLoadingState(-1);
+        },function(err){
+            deferred.reject(err);
+            self.err++;
+            self.setLoadingState(-1);
+        });
+
+        return deferred.promise;
+    };
 });
