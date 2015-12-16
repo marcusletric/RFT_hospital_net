@@ -11,8 +11,15 @@ hospitalNet.service('innerTransfer',function(){
         };
 });
 
-hospitalNet.run(function($rootScope){
+hospitalNet.run(function($rootScope,$timeout){
     $rootScope.Utils = {
         keys : Object.keys
-    }
+    };
+    $rootScope.reloadView = function(){
+        $rootScope.loading = true;
+        $rootScope.reload = true;
+        $timeout(function(){
+            $rootScope.reload = false;
+        });
+    };
 });

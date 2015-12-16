@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2015.12.09..
  */
-hospitalNet.config(function(entityDefinitions){
+hospitalNet.run(function(entityDefinitions,$filter){
     entityDefinitions.beosztas = {
         table: 'beosztasok',
         entity: 'beosztas',
@@ -22,17 +22,20 @@ hospitalNet.config(function(entityDefinitions){
             datum: {
                 desc: 'Dátum',
                 type: 'date',
-                reqired: true
+                reqired: true,
+                defaultValue: $filter('date')(new Date(),'yyyy-MM-dd')
             },
             mettol: {
                 desc: 'Kezdés',
                 type: 'time',
-                reqired: true
+                reqired: true,
+                defaultValue: new Date(2000,1,1,7,30,0,0)
             },
             meddig: {
                 desc: 'Vége',
                 type: 'time',
-                reqired: true
+                reqired: true,
+                defaultValue: new Date(2000,1,1,16,0,0,0)
             }
         }
     };

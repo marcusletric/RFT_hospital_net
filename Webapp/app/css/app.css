@@ -263,7 +263,8 @@ body {
       border-top: 1px solid rgba(0, 0, 0, 0.3);
       box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1) inset; }
     .app_canvas .main_screen .list-header {
-      margin-top: 7px; }
+      margin-top: 7px;
+      border-bottom: 1px solid #aaaaaa; }
       .app_canvas .main_screen .list-header input {
         width: 300px;
         display: inline-block; }

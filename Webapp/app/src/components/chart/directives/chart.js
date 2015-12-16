@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2015.12.13..
  */
-hospitalNet.directive('chart',function(innerTransfer){
+hospitalNet.directive('chart',function($rootScope,innerTransfer,dataService){
     return {
         restrict: 'E',
         templateUrl: 'src/components/chart/templates/chartTemplate.html',
@@ -10,64 +10,124 @@ hospitalNet.directive('chart',function(innerTransfer){
         },
         link: function (scope,element) {
 
-            console.log(innerTransfer.get());
+            var entityDef = $rootScope.entities[innerTransfer.get()['tipus']];
+            var labels = {};
 
-            function composeChartConfig(){
+            dataService.getData('szemelyek','szemely').then(function(data){
+                data.forEach(function(item){
+                   labels[item.id] = item.vezeteknev + ' ' + item.keresztnev;
+                });
+            });
+
+            dataService.getData(entityDef.table,entityDef.entity).then(function(data){
+                var chartData = separateChartData(filterChartData(data),'dolgozoID',function(input){return input;});
+                for(key in chartData){
+                    chartData[key] = aggregateChartData(chartData[key],
+                                                        'datum',
+                                                        function(data){
+                                                            return new Date(data).getMonth();
+                                                        },
+                                                        function(datas){
+                                                            var sum = 0;
+                                                            datas.forEach(function(data){
+                                                                sum += (new Date("2000-01-01 " + data.meddig).getTime() - new Date("2000-01-01 " + data.mettol).getTime())/1000/60/60;
+                                                            });
+                                                            return parseFloat((sum / datas.length).toFixed(1));
+                                                        }
+                    );
+                }
+                $(element).highcharts(composeChartConfig(chartData));
+            });
+
+            function composeChartConfig(data){
+                var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+                var categories = [];
+
+                var num = 0;
+                var startMonth = innerTransfer.get()['kezdete'].getMonth();
+                do{categories.push(months[innerTransfer.get()['kezdete'].getMonth()]);num++}
+                while(innerTransfer.get()['kezdete'].setMonth(innerTransfer.get()['kezdete'].getMonth()+1) < innerTransfer.get()['vege']);
+
+
+
+                var dataSeries = [];
+
+                for(key in data){
+                    var dataArray = [];
+                    for(var i = startMonth; i < startMonth + num; i++){
+                        if(data[key][i]){
+                            dataArray.push(data[key][i]);
+                        } else {
+                            dataArray.push(0);
+                        }
+                    }
+                    dataSeries.push({
+                        name : labels[key],
+                        data : dataArray
+                    });
+                }
+
+
+
                 return {
-
+                    title: {
+                        text: 'Átlagos napi munkaóra / hónap',
+                        x: -20 //center
+                    },
+                    xAxis: {
+                        categories: categories
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Átlagos napi munkaóra'
+                        },
+                        plotLines: [{
+                            value: 0,
+                            width: 1,
+                            color: '#808080'
+                        }]
+                    },
+                    tooltip: {
+                        valueSuffix: ' óra'
+                    },
+                    legend: {
+                        layout: 'vertical',
+                        align: 'right',
+                        verticalAlign: 'middle',
+                        borderWidth: 0
+                    },
+                    series: dataSeries
                 };
             }
 
-            function composeChartData(){
-
+            function separateChartData(data,field,agrIndexer){
+                var agr = {};
+                data.forEach(function(record){
+                    var agrIndex = agrIndexer(record[field]);
+                    if(!agr[agrIndex]){
+                        agr[agrIndex] = [];
+                    }
+                    agr[agrIndex].push(record);
+                });
+                return agr;
             }
 
-            $(element).highcharts({
-                title: {
-                    text: 'Monthly Average Temperature',
-                    x: -20 //center
-                },
-                subtitle: {
-                    text: 'Source: WorldClimate.com',
-                    x: -20
-                },
-                xAxis: {
-                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-                },
-                yAxis: {
-                    title: {
-                        text: 'Temperature (°C)'
-                    },
-                    plotLines: [{
-                        value: 0,
-                        width: 1,
-                        color: '#808080'
-                    }]
-                },
-                tooltip: {
-                    valueSuffix: '°C'
-                },
-                legend: {
-                    layout: 'vertical',
-                    align: 'right',
-                    verticalAlign: 'middle',
-                    borderWidth: 0
-                },
-                series: [{
-                    name: 'Tokyo',
-                    data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-                }, {
-                    name: 'New York',
-                    data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
-                }, {
-                    name: 'Berlin',
-                    data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
-                }, {
-                    name: 'London',
-                    data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-                }]
-            });
+            function aggregateChartData(data,agrField,agrIndex,agrFn){
+                var agr = {};
+                agr = separateChartData(data,agrField,agrIndex);
+                for(key in agr){
+                    agr[key] = agrFn(agr[key]);
+                }
+                return agr;
+            }
+
+            function filterChartData(data){
+                return data.filter(function(record){
+                    return new Date(record.datum).getTime() >= innerTransfer.get()['kezdete'].getTime() && new Date(record.datum).getTime() <= innerTransfer.get()['vege'].getTime();
+                });
+            }
         }
     }
 });
