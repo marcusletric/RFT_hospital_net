@@ -3,7 +3,8 @@
  */
 hospitalNet.config(function(entityDefinitions){
     entityDefinitions.kimutatas = {
-        table: '',
+        table: 'beosztasok',
+        entity: 'beosztas',
         dataFields: {
             tipus: {
                 desc: 'Kimutatás',

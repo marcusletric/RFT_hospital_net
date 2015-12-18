@@ -3,9 +3,11 @@
  */
 hospitalNet.controller('betegfelvetelekCtrl',function($scope,$state,$rootScope,dataService){
     $scope.deleteItem = function(item){
-        dataService.deleteRecord($rootScope.entities.betegFelvetel.table,{id: item.id}).then(function(data){
-            $rootScope.reloadView();
-        });
+        if(confirm('Biztosan törli a bejegyzést?')){
+            dataService.deleteRecord($rootScope.entities.betegFelvetel.table,{id: item.id}).then(function(data){
+                $rootScope.reloadView();
+            });
+        }
     };
 
     $scope.releaseItem = function(item){

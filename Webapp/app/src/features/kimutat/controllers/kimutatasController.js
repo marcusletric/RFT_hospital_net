@@ -1,15 +1,17 @@
 /**
  * Created by Administrator on 2015.12.14..
  */
-hospitalNet.controller('kimutatasCtrl',function($scope,$state,innerTransfer){
+hospitalNet.controller('kimutatasCtrl',function($scope,$rootScope,$state,innerTransfer){
     var self = this;
     this.data = {};
-    $scope.getData = function(data){
-        self.data = data;
+    var entityDef = $rootScope.entities['kimutatas'];
+
+    $scope.getData = function(formScope){
+        for(key in entityDef.dataFields){
+            $scope[key] = formScope[key];
+        }
+        $scope.startRender();
     };
 
-    $scope.kimutatas_render = function(){
-        innerTransfer.set(self.data);
-        $state.go('kimutatas_render');
-    }
+    innerTransfer.set({'tipus': 'beosztas'});
 });

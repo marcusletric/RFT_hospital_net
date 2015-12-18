@@ -6,11 +6,19 @@ hospitalNet.directive('chart',function($rootScope,innerTransfer,dataService){
         restrict: 'E',
         templateUrl: 'src/components/chart/templates/chartTemplate.html',
         scope: {
-            objectDef: '='
+            objectDef: '=',
+            getData : '=',
+            startRender: '='
         },
         link: function (scope,element) {
 
-            var entityDef = $rootScope.entities[innerTransfer.get()['tipus']];
+            scope.tipus = "";
+            scope.vege = new Date();
+            scope.kezdete = new Date(scope.vege.getFullYear()-1 + '-' + scope.vege.getMonth() + '-' + scope.vege.getDay());
+
+            var entityDef = $rootScope.entities['kimutatas'];
+
+            var rawData;
             var labels = {};
 
             dataService.getData('szemelyek','szemely').then(function(data){
@@ -19,36 +27,58 @@ hospitalNet.directive('chart',function($rootScope,innerTransfer,dataService){
                 });
             });
 
-            dataService.getData(entityDef.table,entityDef.entity).then(function(data){
-                var chartData = separateChartData(filterChartData(data),'dolgozoID',function(input){return input;});
+
+            dataService.getData(entityDef.table,entityDef.entity).then(function(data) {
+                rawData = data;
+            });
+
+            scope.startRender = function(){
+                rawData && renderChart();
+            };
+
+
+
+
+            function renderChart(){
+                var chartData = separateChartData(filterChartData(rawData),'dolgozoID',function(input){return input;});
                 for(key in chartData){
                     chartData[key] = aggregateChartData(chartData[key],
-                                                        'datum',
-                                                        function(data){
-                                                            return new Date(data).getMonth();
-                                                        },
-                                                        function(datas){
-                                                            var sum = 0;
-                                                            datas.forEach(function(data){
-                                                                sum += (new Date("2000-01-01 " + data.meddig).getTime() - new Date("2000-01-01 " + data.mettol).getTime())/1000/60/60;
-                                                            });
-                                                            return parseFloat((sum / datas.length).toFixed(1));
-                                                        }
+                        'datum',
+                        function(data){
+                            return new Date(data).getMonth();
+                        },
+                        function(datas){
+                            var sum = 0;
+                            datas.forEach(function(data){
+                                sum += (new Date("2000-01-01 " + data.meddig).getTime() - new Date("2000-01-01 " + data.mettol).getTime())/1000/60/60;
+                            });
+                            return parseFloat((sum / datas.length).toFixed(1));
+                        }
                     );
                 }
                 $(element).highcharts(composeChartConfig(chartData));
-            });
+            }
 
             function composeChartConfig(data){
+                var currentTime = {};
                 var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
                 var categories = [];
 
+                if(!scope.$parent.kezdete || !scope.$parent.vege){
+                    return;
+                }
+
                 var num = 0;
-                var startMonth = innerTransfer.get()['kezdete'].getMonth();
-                do{categories.push(months[innerTransfer.get()['kezdete'].getMonth()]);num++}
-                while(innerTransfer.get()['kezdete'].setMonth(innerTransfer.get()['kezdete'].getMonth()+1) < innerTransfer.get()['vege']);
+                var startMonth = scope.$parent.kezdete.getMonth();
+                currentTime = new Date(scope.$parent.kezdete.getTime());
+                do{
+                    categories.push(months[currentTime.getMonth()]);
+                    currentTime.setMonth(currentTime.getMonth()+1);
+                    num++
+                }
+                while(currentTime.getTime() < scope.$parent.vege.getTime());
 
 
 
@@ -125,7 +155,7 @@ hospitalNet.directive('chart',function($rootScope,innerTransfer,dataService){
 
             function filterChartData(data){
                 return data.filter(function(record){
-                    return new Date(record.datum).getTime() >= innerTransfer.get()['kezdete'].getTime() && new Date(record.datum).getTime() <= innerTransfer.get()['vege'].getTime();
+                    return new Date(record.datum).getTime() >= scope.kezdete.getTime() && new Date(record.datum).getTime() <= scope.vege.getTime();
                 });
             }
         }

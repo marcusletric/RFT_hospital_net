@@ -12,7 +12,7 @@ hospitalNet.directive('list', function(dataService,$rootScope,$q){
             var joinTables = scope.$eval(attrs.joinTables);
             var table = objDef.table;
             var entity = objDef.entity;
-            var listData;
+            var listData = null;
             var joinData = {};
             var loadPromises = [];
 

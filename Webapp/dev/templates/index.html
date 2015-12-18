@@ -35,7 +35,9 @@
       <li ng-repeat="route in routes"><a >{{route.name}}</a></li>
     </ul>
 
-    <div class="main_screen" ui-view></div>
+    <div class="main_screen" ng-if="!reload">
+      <div ui-view></div>
+    </div>
     <div class="loading-overlay" ng-if="loading">
       <div class="loading-indicator">
         <div>

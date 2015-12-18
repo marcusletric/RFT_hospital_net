@@ -262,8 +262,13 @@ body {
       background-color: #ffffff;
       border-top: 1px solid rgba(0, 0, 0, 0.3);
       box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1) inset; }
+    .app_canvas .main_screen .no-layout {
+      max-width: 300px;
+      display: inline-block;
+      margin-right: 5px; }
     .app_canvas .main_screen .list-header {
       margin-top: 7px;
+      padding-bottom: 10px;
       border-bottom: 1px solid #aaaaaa; }
       .app_canvas .main_screen .list-header input {
         width: 300px;
@@ -344,7 +349,7 @@ body {
                 background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.12) 51%, rgba(0, 0, 0, 0.04)); }
     .app_canvas .main_screen chart {
       position: absolute;
-      top: 0;
+      top: 100px;
       left: 0;
       bottom: 0;
       right: 0;

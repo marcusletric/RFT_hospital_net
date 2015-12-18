@@ -20,6 +20,7 @@ hospitalNet.run(function($rootScope,$timeout){
         $rootScope.reload = true;
         $timeout(function(){
             $rootScope.reload = false;
+            $rootScope.loading = false;
         });
     };
 });

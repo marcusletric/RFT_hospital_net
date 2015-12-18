@@ -20,6 +20,8 @@ hospitalNet.directive('formInput', function($compile,$http,dataService){
                         'placeholder' : fieldDef.desc,
                         'is-open': attrs['formField'] + '_opened'
                     });
+                    scope.$watch(attrs['formField'],function(){angular.isFunction(scope.getData()) && scope.getData()(scope.$parent);});
+
                     if(fieldDef.options){
                         newElem.find('option').html(fieldDef.desc);
                         if(fieldDef.options.dynamicData){

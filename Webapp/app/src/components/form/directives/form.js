@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2015.12.06..
  */
-hospitalNet.directive('form', function($stateParams,$rootScope,$window,$state,dataService,$filter){
+hospitalNet.directive('form', function($stateParams,$rootScope,$window,$state,dataService,$filter,$compile,$http){
     return {
         restrict: 'C',
         templateUrl: 'src/components/form/templates/formTemplate.html',
@@ -9,11 +9,21 @@ hospitalNet.directive('form', function($stateParams,$rootScope,$window,$state,da
         scope: {
             objectDef : '=',
             saveControls : '=',
+            validatorService : '=',
             getData: '&'
         },
-        link: function(scope){
+        link: function(scope,element,attrs){
             var hasValidStateParam = false;
             var elementsToRender = $rootScope.Utils.keys(scope.objectDef.dataFields).length;
+
+            scope.validatorService = element.error;
+            if(attrs.customTemplateUrl){
+                $http.get(attrs.customTemplateUrl).then(function(response){
+                    element.html('');
+                    element.append($(response.data));
+                    $compile($(element).contents())(scope);
+                });
+            }
 
             for(key in $stateParams){
                 if($stateParams[key]){
@@ -37,18 +47,19 @@ hospitalNet.directive('form', function($stateParams,$rootScope,$window,$state,da
 
             scope.leftInputs = {};
             scope.rightInputs = {};
+            scope.allInputs = {};
 
             for (field in scope.objectDef.dataFields){
                 var fieldName = field;
                 formField = scope.objectDef.dataFields[field];
                 formField.reqired ? scope.leftInputs[fieldName] = formField : scope.rightInputs[fieldName] = formField;
+                scope.allInputs[fieldName] = formField ;
+
             }
 
             scope.back = function(){
                 $window.history.back();
             };
-
-            angular.isFunction(scope.getData()) && scope.getData()(scope);
 
             scope.saveData = function(){
                 var dataset = {};

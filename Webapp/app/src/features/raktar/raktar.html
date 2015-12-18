@@ -1,5 +1,5 @@
 <h3>Raktár</h3>
-<div class="list-view" ng-controller="raktarCtrl">
+<div class="list-view" ng-controller="raktarCtrl" ng-if="!reload">
     <list object-def="entities.raktariTargy" condition="" fields="['nev']" controls="['fill','modify','delete']" ></list>
     <div class="form-footer">
         <button type="button" class="btn btn-primary" ng-click="addItem()"><span class="glyphicon glyphicon-plus"></span> Raktári elem hozzáadása</button>
